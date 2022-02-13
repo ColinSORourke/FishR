@@ -13,18 +13,27 @@ MonoBehaviour:
   m_Name: Test Zone 1
   m_EditorClassIdentifier: 
   zoneName: TestZone
+  id: 0
   Description: We are here for testing
   unlockCost: 0
   hintCost: 0
   background: {fileID: 0}
   banner: {fileID: 0}
-  minTime:
+  baseMinTime:
     hours: 0
     minutes: 1
     seconds: 0
-  maxTime:
+  baseMaxTime:
     hours: 0
     minutes: 5
+    seconds: 0
+  minScalar:
+    hours: 0
+    minutes: 0
+    seconds: 0
+  maxScalar:
+    hours: 0
+    minutes: 0
     seconds: 0
   commonFish: {fileID: 0}
   uncommonFish: {fileID: 0}
