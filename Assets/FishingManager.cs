@@ -15,9 +15,6 @@ public class FishingManager : MonoBehaviour
     public Text timeText;
     public NotificationManager notifs;
 
-
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +41,9 @@ public class FishingManager : MonoBehaviour
 
     void halfMinuteTick(){
         if (currFishing.actuallyFishing){
+            if ( fishingButton.interactable){
+                fishingButton.interactable = false;
+            }
             if (DateTime.Now > currFishing.biteTime){
                 if (DateTime.Now > currFishing.biteTime + currFishing.biteDuration){
                     currFishing.actuallyFishing = false;
@@ -72,24 +72,24 @@ public class FishingManager : MonoBehaviour
     }
 
     public void startFishing(){
+
+        Zone currZone = this.GetComponent<PlayerData>().currZone;
+        TimeSpan timeTillBite = currZone.randomDuration();
+
         currFishing = new fishingStatus();
-        int Minutes = Random.Range(0,3);
-        int Seconds = Random.Range(15,45);
         currFishing.actuallyFishing = true;
         currFishing.startTime = DateTime.Now;
-        currFishing.biteTime = DateTime.Now + new TimeSpan(0, Minutes, Seconds);
+        currFishing.biteTime = DateTime.Now + timeTillBite;
         currFishing.biteDuration = new TimeSpan(0, 0, 20);
-        currFishing.minTime = new TimeSpan(0, 0, 15);
-        currFishing.maxTime = new TimeSpan(0, 2, 45);
+        currFishing.minTime = currZone.minTime.deserialize();
+        currFishing.maxTime = currZone.maxTime.deserialize();
 
-        currFishing.missID = notifs.scheduleNotification(new TimeSpan(0, Minutes, Seconds), new TimeSpan(0, 0, 20));
+        currFishing.missID = notifs.scheduleNotification(timeTillBite, new TimeSpan(0, 0, 20));
 
         string json = JsonUtility.ToJson(currFishing.toStringObj());
 
         Debug.Log("Saving as JSON: " + json);
         System.IO.File.WriteAllText(Application.persistentDataPath + "/FishingData.json", json);
-
-        
     }
 
     public void stopFishing(){
