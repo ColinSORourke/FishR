@@ -1,3 +1,5 @@
+#if !Unity_IPhone
+
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -20,7 +22,7 @@ public class iOS_Notif_Manager : NotificationManager
         
     }
 
-    public override void scheduleNotification(TimeSpan fromNow, TimeSpan duration){
+    public override string scheduleNotification(TimeSpan fromNow, TimeSpan duration){
         var timeTriggerA = new iOSNotificationTimeIntervalTrigger()
         {
             TimeInterval = fromNow,
@@ -66,5 +68,12 @@ public class iOS_Notif_Manager : NotificationManager
         };
 
         iOSNotificationCenter.ScheduleNotification(notificationB);
+        return notificationB.Identifier;
+    }
+
+    public override void unscheduleMiss(string id){
+        iOSNotificationCenter.RemoveScheduledNotification(id);
     }
 }
+
+#endif

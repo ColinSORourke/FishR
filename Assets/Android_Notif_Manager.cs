@@ -1,3 +1,5 @@
+#if UNITY_ANDROID
+
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -29,7 +31,7 @@ public class Android_Notif_Manager : NotificationManager
         
     }
 
-    public override void scheduleNotification(TimeSpan fromNow, TimeSpan duration){
+    public override string scheduleNotification(TimeSpan fromNow, TimeSpan duration){
         var notificationA = new AndroidNotification();
         notificationA.Title = "A Bite!";
         notificationA.Text = "You caught something! Check in in the next " + duration.Minutes + " minutes to claim it!";
@@ -42,6 +44,13 @@ public class Android_Notif_Manager : NotificationManager
         notificationB.Text = "You caught something, but it got away! Better luck next time.";
         notificationB.FireTime = System.DateTime.Now + fromNow + duration;
 
-        AndroidNotificationCenter.SendNotification(notificationB, myChannel.Id);
+        var missID = Convert.ToString( AndroidNotificationCenter.SendNotification(notificationB, myChannel.Id) );
+        return missID;
+    }
+
+    public override void unscheduleMiss(string id){
+        AndroidNotificationCenter.CancelNotification( Int32.Parse(id) );
     }
 }
+
+#endif
