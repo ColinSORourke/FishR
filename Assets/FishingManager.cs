@@ -4,7 +4,6 @@ using System.IO;
 using System;
 using Random=UnityEngine.Random;
 using UnityEngine.UI;
-using Unity.Notifications.iOS;
 
 using UnityEngine;
 

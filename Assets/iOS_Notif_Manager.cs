@@ -1,4 +1,4 @@
-#if !Unity_IPhone
+#if Unity_IPhone
 
 using System.Collections;
 using System.Collections.Generic;

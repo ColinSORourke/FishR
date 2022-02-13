@@ -4,7 +4,6 @@ using System;
 using Random=UnityEngine.Random;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.Notifications.iOS;
 
 public class NotificationManager : MonoBehaviour
 {
