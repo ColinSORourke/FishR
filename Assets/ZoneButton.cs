@@ -20,6 +20,8 @@ public class ZoneButton : MonoBehaviour
         } else {
             this.GetComponent<Image>().color = new Color32(255,255,255,255);
         }
+
+        this.transform.GetChild(0).GetComponent<Text>().text = myZone.zoneName;
     }
 
     // Update is called once per frame

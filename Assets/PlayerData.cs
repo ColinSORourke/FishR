@@ -11,6 +11,7 @@ public class PlayerData : MonoBehaviour
     public playerSaveData myData;
     public Text cashText;
     public Zone currZone;
+    public Zone[] allZones = new Zone[10];
     
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,8 @@ public class PlayerData : MonoBehaviour
             myData = new playerSaveData();
             save();
         }
+
+        displayCurrentZone();
     }
 
     // Update is called once per frame
@@ -37,6 +40,13 @@ public class PlayerData : MonoBehaviour
 
     public void changeZone(Zone newZone){
         currZone = newZone;
+        displayCurrentZone();
+        save();
+    }
+
+    public void changeZone(int newZoneInd){
+        currZone = allZones[newZoneInd];
+        displayCurrentZone();
         save();
     }
 
@@ -52,6 +62,12 @@ public class PlayerData : MonoBehaviour
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         myData.allZoneData[buyZone.index].unlocked = true;
         save();
+    }
+
+    public void displayCurrentZone(){
+        var background = GameObject.Find("ZoneBackground");
+        background.GetComponent<Image>().sprite = currZone.background;
+        this.GetComponent<FishingManager>().zoneTimeText(currZone);
     }
 
     public void save(){

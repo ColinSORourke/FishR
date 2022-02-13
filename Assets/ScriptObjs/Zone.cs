@@ -41,12 +41,12 @@ public class Zone : ScriptableObject
         return new serialTimeSpan(minTime(hook));
     }
 
-    public serialTimeSpan serialMaxTime(int bait){
-        return new serialTimeSpan(maxTime(bait));
-    }
-
     public TimeSpan maxTime(int bait){
         return baseMaxTime.deserialize() - (multiplyTime(minScalar.deserialize(), bait));
+    }
+
+    public serialTimeSpan serialMaxTime(int bait){
+        return new serialTimeSpan(maxTime(bait));
     }
     
     public TimeSpan multiplyTime(TimeSpan original, int scalar){

@@ -29,7 +29,7 @@ public class FishingManager : MonoBehaviour
             currFishing.actuallyFishing = false;
         }
 
-        InvokeRepeating("halfMinuteTick", 0.0f, 1.0f);
+        InvokeRepeating("halfMinuteTick", 0.0f, 30.0f);
     }
 
     // Update is called once per frame
@@ -51,31 +51,50 @@ public class FishingManager : MonoBehaviour
 
             if ( fishingButton.interactable){
                 fishingButton.interactable = false;
+                fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
             }
             if (TheNow > biteTime){
+                if (!catchPanel.activeInHierarchy){
+                    catchPanel.SetActive(true);
+                    this.GetComponent<PlayerData>().changeZone(currFishing.zoneIndex);
+                    timeText.GetComponent<Text>().text = "Got a Bite!";
+                }
                 if (TheNow > biteEnd){
                     currFishing.actuallyFishing = false;
                     catchPanel.transform.GetChild(1).GetComponent<CatchButton>().fail();
                     catchPanel.transform.GetChild(2).GetComponent<Text>().text = "Awwwww, you missed the fish. Better luck next time.";
+                    zoneTimeText(this.GetComponent<PlayerData>().currZone);
                 } else {
                     TimeSpan remainingTime = currFishing.biteDuration.deserialize() - (TheNow - biteTime);
-                    catchPanel.transform.GetChild(2).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + ":" + remainingTime.Seconds + " left to catch it.";
+                    catchPanel.transform.GetChild(2).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + " minutes left to catch it.";
                 }
-                if (!catchPanel.activeInHierarchy){
-                    catchPanel.SetActive(true);
-                }
+                
             } else {
                 TimeSpan diffTime = TheNow - startTime;
                 string minString;
                 if (minTime <= diffTime){
-                    minString = "Now";
+                    minString = "0";
                 } else {
-                    minString = (minTime - diffTime).Minutes + ":" + (minTime - diffTime).Seconds;
+                    minString = (minTime - diffTime).Hours + ":" + ((minTime - diffTime).Minutes).ToString("00");
                 }
-                string maxString = (maxTime - diffTime).Minutes + ":" + (maxTime - diffTime).Seconds;
-                timeText.GetComponent<Text>().text = "Catch between " + minString + "  and " + maxString + " from Now";
+                string maxString = (maxTime - diffTime).Hours + ":" + ((maxTime - diffTime).Minutes).ToString("00");
+                timeText.GetComponent<Text>().text = "Bite in " + minString + " to " + maxString + " hours from now";
             }
         }
+    }
+
+    public void zoneTimeText(Zone currZone){
+        if (!currFishing.actuallyFishing){
+            var min = currZone.minTime(0);
+            var max = currZone.maxTime(0);
+            if (min.Minutes == 0 && max.Minutes == 0){
+                timeText.GetComponent<Text>().text = min.Hours + " to " + max.Hours + " hours";
+            } else {
+                timeText.GetComponent<Text>().text = min.Hours + ":" + (min.Minutes).ToString("00") + " to " + max.Hours + ":" + (max.Minutes).ToString("00") + " hours";
+            }
+            
+        }
+
     }
 
     public void startFishing(){
@@ -85,20 +104,26 @@ public class FishingManager : MonoBehaviour
 
         currFishing = new fishingStatus();
         currFishing.actuallyFishing = true;
+        currFishing.zoneIndex = this.GetComponent<PlayerData>().currZone.index;
         currFishing.startTime = new serialDateTime(DateTime.Now);
         currFishing.biteTime = new serialDateTime(DateTime.Now + timeTillBite);
-        currFishing.biteDuration = new serialTimeSpan(0, 0, 20);
+        currFishing.biteDuration = new serialTimeSpan(0, 20, 0);
         currFishing.minTime = currZone.serialMinTime(0);
         currFishing.maxTime = currZone.serialMaxTime(0);
 
+        fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
+
         currFishing.missID = notifs.scheduleNotification(timeTillBite, new TimeSpan(0, 0, 20));
         saveFishing();
+        halfMinuteTick();
     }
 
     public void stopFishing(){
         currFishing.actuallyFishing = false;
         saveFishing();
         notifs.unscheduleMiss(currFishing.missID);
+        zoneTimeText(this.GetComponent<PlayerData>().currZone);
+        fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Tap to Fish!";
     }
 
     public void saveFishing(){
