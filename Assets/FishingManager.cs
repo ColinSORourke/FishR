@@ -17,11 +17,11 @@ public class FishingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         if (System.IO.File.Exists(Application.persistentDataPath + "/FishingData.json"))
+        if (System.IO.File.Exists(Application.persistentDataPath + "/FishingData.json"))
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/FishingData.json"); 
             string JSON = reader.ReadToEnd();
-            Debug.Log(JSON);
+            Debug.Log("Reading fish save JSON");
             reader.Close();
             currFishing = JsonUtility.FromJson<fishingStatus>(JSON);
         } else {
@@ -36,6 +36,12 @@ public class FishingManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void OnApplicationPause(bool paused){
+        if (!paused){
+            halfMinuteTick();
+        }
     }
 
     void halfMinuteTick(){
@@ -98,7 +104,6 @@ public class FishingManager : MonoBehaviour
     }
 
     public void startFishing(){
-
         Zone currZone = this.GetComponent<PlayerData>().currZone;
         TimeSpan timeTillBite = currZone.randomDuration(0, 0);
 
@@ -113,7 +118,7 @@ public class FishingManager : MonoBehaviour
 
         fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
 
-        currFishing.missID = notifs.scheduleNotification(timeTillBite, new TimeSpan(0, 0, 20));
+        currFishing.missID = notifs.scheduleNotification(timeTillBite, new TimeSpan(0, 20, 0));
         saveFishing();
         halfMinuteTick();
     }
@@ -128,7 +133,7 @@ public class FishingManager : MonoBehaviour
 
     public void saveFishing(){
         string json = JsonUtility.ToJson(currFishing);
-        Debug.Log("Saving as JSON: " + json);
+        Debug.Log("Saving Fishing Data");
         System.IO.File.WriteAllText(Application.persistentDataPath + "/FishingData.json", json);
     }
 

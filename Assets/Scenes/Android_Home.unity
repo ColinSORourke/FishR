@@ -3133,6 +3133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1083085994}
+  fishMan: {fileID: 1083085995}
 --- !u!114 &2145443441
 MonoBehaviour:
   m_ObjectHideFlags: 0

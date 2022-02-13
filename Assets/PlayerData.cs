@@ -20,7 +20,7 @@ public class PlayerData : MonoBehaviour
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/PlayerData.json"); 
             string JSON = reader.ReadToEnd();
-            Debug.Log(JSON);
+            Debug.Log("Reading player save JSON");
             reader.Close();
             myData = JsonUtility.FromJson<playerSaveData>(JSON);
             cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
@@ -57,7 +57,6 @@ public class PlayerData : MonoBehaviour
     }
 
     public void purchaseZone(Zone buyZone){
-        Debug.Log("Purchasing Zone B");
         myData.cash -= buyZone.unlockCost;
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         myData.allZoneData[buyZone.index].unlocked = true;
@@ -72,8 +71,7 @@ public class PlayerData : MonoBehaviour
 
     public void save(){
         string json = JsonUtility.ToJson(myData);
-
-        Debug.Log("Saving as JSON: " + json);
+        Debug.Log("Saving Player Data");
         System.IO.File.WriteAllText(Application.persistentDataPath + "/PlayerData.json", json);
     }
 }
