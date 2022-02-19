@@ -74,6 +74,13 @@ public class PlayerData : MonoBehaviour
         Debug.Log("Saving Player Data");
         System.IO.File.WriteAllText(Application.persistentDataPath + "/PlayerData.json", json);
     }
+
+    public void purchaseHint(){
+        myData.cash -= currZone.hintCost;
+        cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
+        myData.allZoneData[currZone.index].unlockedHint = true;
+        save();
+    }
 }
 
 [Serializable]
@@ -127,7 +134,7 @@ public class fishData{
 public enum fishSize{
     notCaught = -1,
     small = 0,
-    regular = 1,
+    medium = 1,
     large = 2, 
     extraLarge = 3
 }

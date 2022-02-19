@@ -16,7 +16,7 @@ MonoBehaviour:
   index: 1
   Description: We are here for more testing
   unlockCost: 100
-  hintCost: 0
+  hintCost: 100
   background: {fileID: 21300000, guid: 1e0a82372d4f242ec8c6af55da72ac97, type: 3}
   banner: {fileID: 0}
   baseMinTime:
@@ -35,7 +35,7 @@ MonoBehaviour:
     hours: 0
     minutes: 0
     seconds: 0
-  commonFish: {fileID: 0}
-  uncommonFish: {fileID: 0}
-  rareFish: {fileID: 0}
-  specialFish: {fileID: 0}
+  commonFish: {fileID: 11400000, guid: aead817e0c9134fc8936793e91066b5e, type: 2}
+  uncommonFish: {fileID: 11400000, guid: 24da930a9850c46dcbf58c68710ff9a4, type: 2}
+  rareFish: {fileID: 11400000, guid: 83f8f5aa490a14bdfac6bcf8d08805cc, type: 2}
+  specialFish: {fileID: 11400000, guid: 237d0bc479e274c78999ddb9874f75d8, type: 2}

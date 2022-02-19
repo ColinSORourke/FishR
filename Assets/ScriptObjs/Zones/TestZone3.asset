@@ -35,7 +35,7 @@ MonoBehaviour:
     hours: 0
     minutes: 0
     seconds: 0
-  commonFish: {fileID: 0}
-  uncommonFish: {fileID: 0}
-  rareFish: {fileID: 0}
-  specialFish: {fileID: 0}
+  commonFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}
+  uncommonFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}
+  rareFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}
+  specialFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}
