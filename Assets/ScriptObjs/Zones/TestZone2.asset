@@ -17,7 +17,7 @@ MonoBehaviour:
   Description: We are here for more testing
   unlockCost: 100
   hintCost: 100
-  background: {fileID: 21300000, guid: 1e0a82372d4f242ec8c6af55da72ac97, type: 3}
+  background: {fileID: 21300000, guid: a52a32d23296e498c85d4d657709580a, type: 3}
   banner: {fileID: 0}
   baseMinTime:
     hours: 0
