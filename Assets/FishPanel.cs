@@ -45,7 +45,7 @@ public class FishPanel : MonoBehaviour
 
         this.transform.Find("FishSprite").GetComponent<Image>().sprite = myFish.icon;
         if (!specialCaught && !myFishData.caught){
-            this.transform.Find("FishSprite").GetComponent<Image>().color = new Color32(32,32,32,255);
+            this.transform.Find("FishSprite").GetComponent<Image>().color = new Color32(8,8,8,255);
         } else {
             this.transform.Find("FishSprite").GetComponent<Image>().color = new Color32(255,255,255,255);
         }
