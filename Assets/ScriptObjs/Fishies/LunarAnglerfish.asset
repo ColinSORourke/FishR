@@ -17,5 +17,5 @@ MonoBehaviour:
     fish
   hint: '[TEMP] Once a month, this fish is fully illuminated'
   condition: Catch on a day that is a full moon!
-  icon: {fileID: 21300000, guid: 8acd13a6e732147ae925cbeedfb64836, type: 3}
+  icon: {fileID: 21300000, guid: 8183f836e4a6f4039beaa7f2d714a8ad, type: 3}
   basePay: 0

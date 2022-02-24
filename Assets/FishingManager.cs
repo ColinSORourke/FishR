@@ -72,7 +72,7 @@ public class FishingManager : MonoBehaviour
                     zoneTimeText(this.GetComponent<PlayerData>().currZone);
                 } else {
                     TimeSpan remainingTime = currFishing.biteDuration.deserialize() - (TheNow - biteTime);
-                    catchPanel.transform.GetChild(2).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + " minutes left to catch it.";
+                    catchPanel.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + " minutes left to catch it.";
                 }
                 
             } else {

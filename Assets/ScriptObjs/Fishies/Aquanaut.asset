@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e252019f96374d70982680fef2dcffc, type: 3}
   m_Name: Aquanaut
   m_EditorClassIdentifier: 
-  fishName: Aquanaut
+  fishName: Basstronaut
   description: '[TEMP] Neil Finstrong'
   hint: N/A
   condition: N/A

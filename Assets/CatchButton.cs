@@ -9,6 +9,8 @@ public class CatchButton : MonoBehaviour
     public PlayerData player;
     public FishingManager fishMan;
 
+    public GameObject rewardPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +31,9 @@ public class CatchButton : MonoBehaviour
     public void onClick(){
         if (success){
             player.getMoney(10);
-            fishMan.stopFishing();
+            rewardPanel.SetActive(true);
         } else {
             success = true;
-            fishMan.stopFishing();
         }
     }
 }
