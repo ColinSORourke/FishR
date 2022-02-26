@@ -30,7 +30,12 @@ public class CatchButton : MonoBehaviour
 
     public void onClick(){
         if (success){
-            player.getMoney(10);
+            Zone z = player.currZone;
+            fishRarity r = z.catchFish(player.canSpecial(), 0, fishMan.currFishing);
+            fishSize s = (fishSize) Random.Range(0,4);
+            int p = player.getFish(r, s);
+            FishObj f = z.rarityCatch(r);
+            rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, 1);
             rewardPanel.SetActive(true);
         } else {
             success = true;

@@ -44,7 +44,7 @@ public class FishingManager : MonoBehaviour
         }
     }
 
-    void halfMinuteTick(){
+    public void halfMinuteTick(){
         if (currFishing.actuallyFishing){
 
             var TheNow = DateTime.Now;
@@ -61,8 +61,10 @@ public class FishingManager : MonoBehaviour
             }
             if (TheNow > biteTime){
                 if (!catchPanel.activeInHierarchy){
-                    catchPanel.SetActive(true);
-                    this.GetComponent<PlayerData>().changeZone(currFishing.zoneIndex);
+                    if (this.GetComponent<PlayerData>().currZone.index == currFishing.zoneIndex){
+                        catchPanel.SetActive(true);
+                    }
+                    //this.GetComponent<PlayerData>().changeZone(currFishing.zoneIndex);
                     timeText.GetComponent<Text>().text = "Got a Bite!";
                 }
                 if (TheNow > biteEnd){
@@ -72,7 +74,7 @@ public class FishingManager : MonoBehaviour
                     zoneTimeText(this.GetComponent<PlayerData>().currZone);
                 } else {
                     TimeSpan remainingTime = currFishing.biteDuration.deserialize() - (TheNow - biteTime);
-                    catchPanel.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + " minutes left to catch it.";
+                    catchPanel.transform.GetChild(1).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + " minutes left to catch it.";
                 }
                 
             } else {

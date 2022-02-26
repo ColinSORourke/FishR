@@ -66,7 +66,7 @@ public class FishPanel : MonoBehaviour
                     caughtInfo += "Large";
                     break;
                 case fishSize.extraLarge: 
-                    caughtInfo += "EXTRA LARGE";
+                    caughtInfo += "XL";
                     break;
             }
             caughtInfo += " | " + myFishData.numCaught;

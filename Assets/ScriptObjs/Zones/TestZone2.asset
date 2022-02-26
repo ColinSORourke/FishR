@@ -25,7 +25,7 @@ MonoBehaviour:
     seconds: 0
   baseMaxTime:
     hours: 0
-    minutes: 10
+    minutes: 60
     seconds: 0
   minScalar:
     hours: 0

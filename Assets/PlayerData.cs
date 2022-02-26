@@ -63,10 +63,40 @@ public class PlayerData : MonoBehaviour
         save();
     }
 
+    public int getFish(fishRarity theRarity, fishSize size){
+        FishObj theFish = currZone.rarityCatch(theRarity);
+        float payout = theFish.basePay;
+        switch (size){
+            case fishSize.extraLarge:
+                payout *= 2.0f;
+                break;
+            case fishSize.large:
+                payout *= 1.25f;
+                break;
+            case fishSize.medium:
+                // Do none
+                break;
+            case fishSize.small:
+                payout *= 0.75f;
+                break;
+        }
+        myData.cash += Mathf.RoundToInt(payout);
+        cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
+        myData.allZoneData[currZone.index].catchRarity(theRarity, size);
+        save();
+        return Mathf.RoundToInt(payout);
+    }
+
+    public bool canSpecial(){
+        return !myData.allZoneData[currZone.index].specialCaught;
+    }
+
     public void displayCurrentZone(){
         var background = GameObject.Find("ZoneBackground");
         background.GetComponent<Image>().sprite = currZone.background;
-        this.GetComponent<FishingManager>().zoneTimeText(currZone);
+        var fishMan = this.GetComponent<FishingManager>();
+        fishMan.zoneTimeText(currZone);
+        fishMan.halfMinuteTick();
     }
 
     public void save(){
@@ -115,6 +145,41 @@ public class zoneData{
         uncommonData = new fishData();
         rareData = new fishData();
         specialCaught = false;
+    }
+
+    public void catchRarity(fishRarity r, fishSize s){
+        switch(r){
+            case fishRarity.common:
+                if (!commonData.caught){
+                    commonData.caught = true;
+                }
+                commonData.numCaught += 1;
+                if (s > commonData.bestSize){
+                    commonData.bestSize = s;
+                }
+                break;
+            case fishRarity.uncommon:
+                if (!uncommonData.caught){
+                    uncommonData.caught = true;
+                }
+                uncommonData.numCaught += 1;
+                if (s > uncommonData.bestSize){
+                    uncommonData.bestSize = s;
+                }
+                break;
+            case fishRarity.rare:
+                if (!rareData.caught){
+                    rareData.caught = true;
+                }
+                rareData.numCaught += 1;
+                if (s > rareData.bestSize){
+                    rareData.bestSize = s;
+                }
+                break;
+            case fishRarity.special:
+                specialCaught = true;
+                break;
+        }
     }
 }
 

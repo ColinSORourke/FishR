@@ -30,7 +30,7 @@ public class Zone : ScriptableObject
 
     public virtual bool specialCondition(fishingStatus status){
 
-        return false;
+        return true;
     }
 
     public TimeSpan minTime(int hook){
@@ -59,24 +59,38 @@ public class Zone : ScriptableObject
         var maximum = maxTime(bait);
         int hours = Random.Range(minimum.Hours, maximum.Hours);
         int minutes = Random.Range(minimum.Minutes, maximum.Minutes);
-        int seconds = Random.Range(minimum.Seconds, maximum.Seconds);
+        int seconds = 30;
 
         return new TimeSpan(hours, minutes, seconds);
     }
 
-    public FishObj catchFish(bool canSpecial, int luck, fishingStatus status){
+    public fishRarity catchFish(bool canSpecial, int luck, fishingStatus status){
         if ( canSpecial && specialCondition(status) ){
-            return specialFish;
+            return fishRarity.special;
         } else {
             int myRand = Random.Range(0, 1001);
             if (myRand > (950 - (5 * luck))){
-                return rareFish;
+                return fishRarity.rare;
             } else if (myRand > (800 - (10 * luck) ) ){
-                return uncommonFish;
+                return fishRarity.uncommon;
             } else {
-                return commonFish;
+                return fishRarity.common;
             }
         }
+    }
+
+    public FishObj rarityCatch(fishRarity r){
+        switch (r){
+            case fishRarity.common:
+                return commonFish;
+            case fishRarity.uncommon:
+                return uncommonFish;
+            case fishRarity.rare:
+                return rareFish;
+            case fishRarity.special:
+                return specialFish;
+        }
+        return commonFish;
     }
 }
 
