@@ -57,11 +57,12 @@ public class Zone : ScriptableObject
         
         var minimum = minTime(hook);
         var maximum = maxTime(bait);
-        int hours = Random.Range(minimum.Hours, maximum.Hours);
-        int minutes = Random.Range(minimum.Minutes, maximum.Minutes);
+        var minMinutes = minimum.Hours * 60 + minimum.Minutes;
+        var maxMinutes = maximum.Hours * 60 + maximum.Minutes;
+        var randMinutes = Random.Range(minMinutes, maxMinutes);
         int seconds = 30;
 
-        return new TimeSpan(hours, minutes, seconds);
+        return new TimeSpan(0, randMinutes, seconds);
     }
 
     public fishRarity catchFish(bool canSpecial, int luck, fishingStatus status){
