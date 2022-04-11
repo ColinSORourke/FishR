@@ -39,6 +39,7 @@ public class CatchButton : MonoBehaviour
             rewardPanel.SetActive(true);
         } else {
             success = true;
+            fishMan.fishingButton.interactable = true;
         }
     }
 }

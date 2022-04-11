@@ -7,6 +7,7 @@ public class FishPanel : MonoBehaviour
 {
     public fishRarity myRarity;
     public PlayerData playerData;
+    public Sprite mysteryFish;
     zoneData fullZone;
     FishObj myFish;
     fishData myFishData = new fishData();
@@ -43,11 +44,11 @@ public class FishPanel : MonoBehaviour
         }
         
 
-        this.transform.Find("FishSprite").GetComponent<Image>().sprite = myFish.icon;
+        
         if (!specialCaught && !myFishData.caught){
-            this.transform.Find("FishSprite").GetComponent<Image>().color = new Color32(8,8,8,255);
+            this.transform.Find("FishSprite").GetComponent<Image>().sprite = mysteryFish;
         } else {
-            this.transform.Find("FishSprite").GetComponent<Image>().color = new Color32(255,255,255,255);
+            this.transform.Find("FishSprite").GetComponent<Image>().sprite = myFish.icon;
         }
 
         var caughtText = this.transform.Find("CaughtText");

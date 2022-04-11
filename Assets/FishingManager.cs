@@ -69,8 +69,8 @@ public class FishingManager : MonoBehaviour
                 }
                 if (TheNow > biteEnd){
                     currFishing.actuallyFishing = false;
-                    catchPanel.transform.GetChild(1).GetComponent<CatchButton>().fail();
-                    catchPanel.transform.GetChild(2).GetComponent<Text>().text = "Awwwww, you missed the fish. Better luck next time.";
+                    catchPanel.transform.GetChild(0).GetComponent<CatchButton>().fail();
+                    catchPanel.transform.GetChild(1).GetComponent<Text>().text = "Awwwww, you missed the fish. Better luck next time.";
                     zoneTimeText(this.GetComponent<PlayerData>().currZone);
                 } else {
                     TimeSpan remainingTime = currFishing.biteDuration.deserialize() - (TheNow - biteTime);
