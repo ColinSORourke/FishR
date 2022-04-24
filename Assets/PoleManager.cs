@@ -10,8 +10,14 @@ public class PoleManager : MonoBehaviour
 {
     public playerPoleSave myPoles;  
     public GameObject poleDisplay;
+    public GameObject PDLObj;
+    private PoleDisplayLarge PDL;
     public FishingManager catchMan; 
     // Start is called before the first frame update
+    void Awake(){
+        PDL = PDLObj.GetComponent<PoleDisplayLarge>();
+    }
+    
     void Start()
     {
         if (System.IO.File.Exists(Application.persistentDataPath + "/PlayerPoles.json"))
@@ -28,6 +34,7 @@ public class PoleManager : MonoBehaviour
 
         if (myPoles.myPolesLen > 0){
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+            PDL.buttonsActive(true);
         }
         this.updatePoleDisplay();
     }
@@ -60,6 +67,7 @@ public class PoleManager : MonoBehaviour
         save();
         if (myPoles.myPolesLen == 0){
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
     }
@@ -68,6 +76,7 @@ public class PoleManager : MonoBehaviour
         myPoles.addRandomPole();
         save();
         poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        PDL.buttonsActive(true);
     }
 
     public void deleteRandomPole(){
@@ -75,12 +84,25 @@ public class PoleManager : MonoBehaviour
         save();
         if (myPoles.myPolesLen == 0){
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            PDL.buttonsActive(false);
+        }
+        this.updatePoleDisplay();
+    }
+
+    public void deleteCurrentPole(){
+        myPoles.removeCurrentPole();
+        save();
+        if (myPoles.myPolesLen == 0){
+            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
     }
 
     public void updatePoleDisplay(){
         FishingPole p = this.getPole();
+        Debug.Log(PDL);
+        PDL.displayPole(p);
         poleDisplay.transform.Find("LuckText").GetComponent<Text>().text = p.charm + "";
         poleDisplay.transform.Find("ReelText").GetComponent<Text>().text = p.reel + "";
     }
@@ -158,11 +180,18 @@ public class playerPoleSave {
             this.remove(toRemove);
         }
     }
+
+    public void removeCurrentPole(){
+        if (myPolesLen > 0 && currSelectPole != -1){
+            this.remove(currSelectPole);
+        }
+    }
 }
 
 [Serializable]
 public class FishingPole {
     public int id;
+    public string name;
     public int hook;
     public int bait;
     public int reel;
@@ -173,6 +202,7 @@ public class FishingPole {
     // public tier rank;
     
     public FishingPole(int i){ 
+        name = "Basic Pole";
         id = i;
         hook = 0;
         bait = 0;
@@ -187,6 +217,7 @@ public class FishingPole {
     }
 
     public FishingPole(int i, int h, int b, int r, int c, int d){
+        name = "Custom Pole " + i;
         id = i;
         hook = h;
         bait = b;
