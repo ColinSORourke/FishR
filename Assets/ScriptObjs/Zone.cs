@@ -13,6 +13,7 @@ public class Zone : ScriptableObject
     public string Description;
     public int unlockCost;
     public int hintCost;
+    public int durCost;
 
     public Sprite background;
     public Sprite banner;
@@ -28,7 +29,7 @@ public class Zone : ScriptableObject
     public FishObj rareFish;
     public FishObj specialFish;
 
-    public virtual bool specialCondition(fishingStatus status){
+    public virtual bool specialCondition(fishingStatus status, FishingPole fp){
 
         return true;
     }
@@ -65,8 +66,9 @@ public class Zone : ScriptableObject
         return new TimeSpan(0, randMinutes, seconds);
     }
 
-    public fishRarity catchFish(bool canSpecial, int luck, fishingStatus status){
-        if ( canSpecial && specialCondition(status) ){
+    public fishRarity catchFish(bool canSpecial, FishingPole fp, fishingStatus status){
+        int luck = fp.charm;
+        if ( canSpecial && specialCondition(status, fp) ){
             return fishRarity.special;
         } else {
             int myRand = Random.Range(0, 1001);

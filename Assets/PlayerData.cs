@@ -13,9 +13,7 @@ public class PlayerData : MonoBehaviour
     public Zone currZone;
     public Zone[] allZones = new Zone[10];
     
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Awake(){
         if (System.IO.File.Exists(Application.persistentDataPath + "/PlayerData.json"))
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/PlayerData.json"); 
@@ -23,19 +21,17 @@ public class PlayerData : MonoBehaviour
             Debug.Log("Reading player save JSON");
             reader.Close();
             myData = JsonUtility.FromJson<playerSaveData>(JSON);
-            cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         } else { 
             myData = new playerSaveData();
             save();
         }
-
-        displayCurrentZone();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        
+        cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
+        displayCurrentZone();
     }
 
     public void changeZone(Zone newZone){
@@ -95,7 +91,7 @@ public class PlayerData : MonoBehaviour
         var background = GameObject.Find("ZoneBackground");
         background.GetComponent<Image>().sprite = currZone.background;
         var fishMan = this.GetComponent<FishingManager>();
-        fishMan.zoneTimeText(currZone);
+        fishMan.updateZone(currZone);
         fishMan.halfMinuteTick();
     }
 

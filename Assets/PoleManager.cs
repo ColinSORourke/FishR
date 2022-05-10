@@ -13,13 +13,10 @@ public class PoleManager : MonoBehaviour
     public GameObject PDLObj;
     private PoleDisplayLarge PDL;
     public FishingManager catchMan; 
+    public int lockedPole = -2;
     // Start is called before the first frame update
     void Awake(){
         PDL = PDLObj.GetComponent<PoleDisplayLarge>();
-    }
-    
-    void Start()
-    {
         if (System.IO.File.Exists(Application.persistentDataPath + "/PlayerPoles.json"))
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/PlayerPoles.json"); 
@@ -31,6 +28,11 @@ public class PoleManager : MonoBehaviour
             myPoles = new playerPoleSave();
             save();
         }
+    }
+    
+    void Start()
+    {
+        
 
         if (myPoles.myPolesLen > 0){
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
@@ -49,16 +51,32 @@ public class PoleManager : MonoBehaviour
         return myPoles.getPole();
     }
 
+    public FishingPole getPole(int ind){
+        return myPoles.getPole(ind);
+    }
+
+    public FishingPole getPoleByID(int id){
+        int index = myPoles.findByID(id);
+        return myPoles.getPole(index);
+    }
+
     public void left(){
         FishingPole result = myPoles.left();
         save();
         this.updatePoleDisplay();
+        catchMan.updatePole(result, myPoles.inUseQ());
     }
 
     public void right(){
         FishingPole result = myPoles.right();
         save();
         this.updatePoleDisplay();
+        catchMan.updatePole(result, myPoles.inUseQ());
+    }
+
+    public void weakenByID(int dur, int poleID){
+        FishingPole myPole = this.getPoleByID(poleID);
+        this.weaken(dur, myPole);
     }
 
     public void weaken(int dur, FishingPole p){
@@ -101,20 +119,70 @@ public class PoleManager : MonoBehaviour
 
     public void updatePoleDisplay(){
         FishingPole p = this.getPole();
-        Debug.Log(PDL);
         PDL.displayPole(p);
+        PDL.inUse(this.myPoles.inUseQ());
+
+        if (lockedPole == -2){
+            poleDisplay.transform.Find("LuckText").GetComponent<Text>().text = p.charm + "";
+            poleDisplay.transform.Find("ReelText").GetComponent<Text>().text = p.reel + "";
+            poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
+        } else {
+            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+        }
+    }
+
+    public bool inUse(){
+        return myPoles.inUseQ();
+    }
+
+    public void startUsing(){
+        myPoles.startUsing();
+        this.updatePoleDisplay();
+        save();
+    }
+
+    public void stopUsing(int poleID){
+        Debug.Log("No Longer using pole ID: " + poleID);
+        int ind = myPoles.findByID(poleID);
+        myPoles.stopUsing(ind);
+        save();
+        this.updatePoleDisplay();
+    }
+
+    public void lockPole(int poleID){
+        lockedPole = myPoles.findByID(poleID);
+        FishingPole p = myPoles.getPole(lockedPole);
+
+        myPoles.currSelectPole = lockedPole;
         poleDisplay.transform.Find("LuckText").GetComponent<Text>().text = p.charm + "";
         poleDisplay.transform.Find("ReelText").GetComponent<Text>().text = p.reel + "";
+        poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
+        poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+    }
+
+    public void unlockPole(){
+        lockedPole = -2;
+        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        this.updatePoleDisplay();
     }
 }
 
 [Serializable]
 public class playerPoleSave {
     public List<FishingPole> myPoles = new List<FishingPole>();
+    public bool[] inUse = new bool[6];
     public int myPolesLen;
     public FishingPole basePole = new FishingPole(0);
     public int currSelectPole = -1;
     public int polesBought = 0;
+
+    public playerPoleSave(){
+        int i = 0;
+        while (i < 6){
+            inUse[i] = false;
+            i += 1;
+        }
+    }
 
     public FishingPole getPole(){
         if (currSelectPole != -1){
@@ -122,6 +190,42 @@ public class playerPoleSave {
         } else {
             return basePole;
         }
+    }
+
+    public FishingPole getPole(int ind){
+        if (ind < myPoles.Count && ind >= 0){
+            return myPoles[ind];
+        } else {
+            return basePole;
+        }
+    }
+
+    public void startUsing(){
+        inUse[currSelectPole + 1] = true;
+    }
+
+    public void startUsing(int ind){
+        if (ind < 6){
+            inUse[ind + 1] = true;
+        } 
+    }
+
+    public void stopUsing(int ind){
+        Debug.Log("No Longer using pole index: " + ind);
+        if (ind < 6){
+            inUse[ind + 1] = false;
+        } 
+    }
+
+    public bool inUseQ(){
+        return inUse[currSelectPole + 1];
+    }
+
+    public bool inUseQ(int ind) {
+        if (ind < 6){
+            return inUse[ind + 1];
+        } 
+        return false;
     }
 
     public FishingPole left(){
@@ -159,16 +263,15 @@ public class playerPoleSave {
         }
     }
 
+    public int findByID(int i){
+        return myPoles.FindIndex(x => x.id == i);
+    }
+
     public void addRandomPole(){
         if (myPolesLen < 5){
             polesBought += 1;
-            int h = Random.Range(0, 21);
-            int b = Random.Range(0, 21);
-            int r = Random.Range(0, 21);
-            int c = Random.Range(0, 21);
-            int d = Random.Range(0, 21);
-
-            FishingPole newPole = new FishingPole(polesBought, h, b, r, c, d);
+        
+            FishingPole newPole = new FishingPole(polesBought, -1);
             myPoles.Add(newPole);
             myPolesLen += 1;
         }
@@ -213,6 +316,16 @@ public class FishingPole {
     }
 
     public FishingPole(int i, int Budget){
+        name = "Custom Pole " + i;
+        id = i;
+        if (Budget == -1){
+            hook = Random.Range(0, 21);
+            bait = Random.Range(0, 21);
+            reel = Random.Range(0, 21);
+            charm = Random.Range(0, 21);
+            durability = 10 + Random.Range(0, 21);
+            currDur = durability;
+        }
         // TO IMPLEMENT
     }
 

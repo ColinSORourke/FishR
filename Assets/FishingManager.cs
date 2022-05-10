@@ -8,34 +8,31 @@ using UnityEngine;
 
 public class FishingManager : MonoBehaviour
 {
-    public fishingStatus currFishing;
+    public fishingStatuses currFishing;
     public GameObject catchPanel;
     public Button fishingButton;
-    public Text timeText;
+    public TimeDisplay timeText;
     public NotificationManager notifs;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Awake(){
         if (System.IO.File.Exists(Application.persistentDataPath + "/FishingData.json"))
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/FishingData.json"); 
             string JSON = reader.ReadToEnd();
             Debug.Log("Reading fish save JSON");
             reader.Close();
-            currFishing = JsonUtility.FromJson<fishingStatus>(JSON);
+            currFishing = JsonUtility.FromJson<fishingStatuses>(JSON);
         } else {
-            currFishing = new fishingStatus();
-            currFishing.actuallyFishing = false;
+            currFishing = new fishingStatuses();
         }
-
-        InvokeRepeating("halfMinuteTick", 0.0f, 30.0f);
     }
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        
+        this.buttonUpdate();
+
+        InvokeRepeating("halfMinuteTick", 0.0f, 30.0f);
     }
 
     void OnApplicationPause(bool paused){
@@ -45,92 +42,62 @@ public class FishingManager : MonoBehaviour
     }
 
     public void halfMinuteTick(){
-        if (currFishing.actuallyFishing){
-
-            var TheNow = DateTime.Now;
-            var startTime = currFishing.startTime.deserialize();
-            var biteTime = currFishing.biteTime.deserialize();
-            var biteEnd = currFishing.biteTime.deserialize() + currFishing.biteDuration.deserialize();
-            var minTime = currFishing.minTime.deserialize();
-            var maxTime = currFishing.maxTime.deserialize();
-
-
+        Zone z = this.GetComponent<PlayerData>().currZone;
+        fishingStatus fs = currFishing.activeInZone(z);
+        if (fs != null){
+            FishingPole fp = this.GetComponent<PoleManager>().getPoleByID(fs.poleID);
+            this.GetComponent<PoleManager>().lockPole(fs.poleID);
+            fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
             if ( fishingButton.interactable){
                 fishingButton.interactable = false;
-                fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
             }
-            if (TheNow > biteTime){
+            if (DateTime.Now > fs.biteTime.deserialize()){
                 if (!catchPanel.activeInHierarchy){
-                    if (this.GetComponent<PlayerData>().currZone.index == currFishing.zoneIndex){
-                        catchPanel.SetActive(true);
-                    }
-                    //this.GetComponent<PlayerData>().changeZone(currFishing.zoneIndex);
-                    timeText.GetComponent<Text>().text = "Got a Bite!";
+                    catchPanel.SetActive(true);
+                    timeText.bite();
                 }
-                if (TheNow > biteEnd){
-                    currFishing.actuallyFishing = false;
+
+                if (DateTime.Now > fs.getAwayTime()){
+                    currFishing.stopFishing(z);
                     catchPanel.transform.GetChild(0).GetComponent<CatchButton>().fail();
                     catchPanel.transform.GetChild(1).GetComponent<Text>().text = "Awwwww, you missed the fish. Better luck next time.";
-                    zoneTimeText(this.GetComponent<PlayerData>().currZone);
+                    timeText.displayFutureTime(z, fp.hook, fp.bait);
                 } else {
-                    TimeSpan remainingTime = currFishing.biteDuration.deserialize() - (TheNow - biteTime);
-                    catchPanel.transform.GetChild(1).GetComponent<Text>().text = "You got a bite! You have " + remainingTime.Minutes + " minutes left to catch it.";
+                    TimeSpan remainingTime = (fs.getAwayTime() - DateTime.Now);
+                    int roundMin = remainingTime.Seconds != 0 ? 1 : 0;
+                    catchPanel.transform.GetChild(1).GetComponent<Text>().text = "You got a bite! You have " + (remainingTime.Minutes + roundMin) + " minutes left to catch it.";
                 }
-                
             } else {
-                TimeSpan diffTime = TheNow - startTime;
-                string minString;
-                if (minTime <= diffTime){
-                    minString = "0";
-                } else {
-                    minString = (minTime - diffTime).Hours + ":" + ((minTime - diffTime).Minutes).ToString("00");
-                }
-                string maxString = (maxTime - diffTime).Hours + ":" + ((maxTime - diffTime).Minutes).ToString("00");
-                timeText.GetComponent<Text>().text = "Bite in " + minString + " to " + maxString + " hours from now";
+                timeText.displayRemainingTime(fs);
             }
         }
-    }
-
-    public void zoneTimeText(Zone currZone){
-        if (!currFishing.actuallyFishing){
-            var min = currZone.minTime(0);
-            var max = currZone.maxTime(0);
-            if (min.Minutes == 0 && max.Minutes == 0){
-                timeText.GetComponent<Text>().text = min.Hours + " to " + max.Hours + " hours";
-            } else {
-                timeText.GetComponent<Text>().text = min.Hours + ":" + (min.Minutes).ToString("00") + " to " + max.Hours + ":" + (max.Minutes).ToString("00") + " hours";
-            }
-            
-        }
-
     }
 
     public void startFishing(){
-        Zone currZone = this.GetComponent<PlayerData>().currZone;
-        TimeSpan timeTillBite = currZone.randomDuration(0, 0);
-
-        currFishing = new fishingStatus();
-        currFishing.actuallyFishing = true;
-        currFishing.zoneIndex = this.GetComponent<PlayerData>().currZone.index;
-        currFishing.startTime = new serialDateTime(DateTime.Now);
-        currFishing.biteTime = new serialDateTime(DateTime.Now + timeTillBite);
-        currFishing.biteDuration = new serialTimeSpan(0, 20, 0);
-        currFishing.minTime = currZone.serialMinTime(0);
-        currFishing.maxTime = currZone.serialMaxTime(0);
-
-        fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
-
-        currFishing.missID = notifs.scheduleNotification(timeTillBite, new TimeSpan(0, 20, 0));
-        saveFishing();
-        halfMinuteTick();
+        Zone z = this.GetComponent<PlayerData>().currZone;
+        FishingPole fp = this.GetComponent<PoleManager>().getPole();
+        if (currFishing.canFish()){
+            int i = currFishing.startFishing(z, fp);
+            this.GetComponent<PoleManager>().startUsing();
+            fishingStatus fs = currFishing.activeInZone(z);
+            fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
+            string missID = notifs.scheduleNotification(fs.timeTillBite(), fs.biteDuration.deserialize(), i);
+            currFishing.addMissID(z, missID);
+            saveFishing();
+            halfMinuteTick();
+        }
     }
 
     public void stopFishing(){
-        currFishing.actuallyFishing = false;
+        Zone z = this.GetComponent<PlayerData>().currZone;
+        FishingPole fp = this.GetComponent<PoleManager>().getPole();
+        fishingStatus fs = currFishing.activeInZone(z);
+        currFishing.stopFishing(z);
         saveFishing();
-        notifs.unscheduleMiss(currFishing.missID);
-        zoneTimeText(this.GetComponent<PlayerData>().currZone);
+        notifs.unscheduleMiss(fs.missID);
+        timeText.displayFutureTime(z, fp.hook, fp.bait);
         fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Tap to Fish!";
+        this.GetComponent<PoleManager>().unlockPole();
     }
 
     public void saveFishing(){
@@ -139,16 +106,151 @@ public class FishingManager : MonoBehaviour
         System.IO.File.WriteAllText(Application.persistentDataPath + "/FishingData.json", json);
     }
 
+    public void buttonUpdateVars(Zone z, FishingPole fp, bool inUse){
+        timeText.displayFutureTime(z, fp.hook, fp.bait);
+        if (currFishing.activeInZone(z) == null){
+            this.GetComponent<PoleManager>().unlockPole();
+            if (currFishing.canFish()){
+                fishingButton.interactable = !inUse;
+                if (inUse){
+                    fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Already Using that pole!";
+                } else {
+                    fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Tap to Fish!";
+                }
+            } else {
+                fishingButton.interactable = false;
+                fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Too much fishing!";
+            }
+        }
+    }
+
+    public void buttonUpdate(){
+        Zone z = this.GetComponent<PlayerData>().currZone;
+        FishingPole fp = this.GetComponent<PoleManager>().getPole();
+        bool inUse = this.GetComponent<PoleManager>().inUse();
+        Debug.Log("Button Update poleID: " + fp.id + ", inUse: " + inUse);
+        this.buttonUpdateVars(z, fp, inUse);
+    }
+
+    public void updateZone(Zone z){
+        FishingPole fp = this.GetComponent<PoleManager>().getPole();
+        bool inUse = this.GetComponent<PoleManager>().inUse();
+        this.buttonUpdateVars(z, fp, inUse);
+    }
+
+    public void updatePole(FishingPole fp, bool inUse = false){
+        Zone z = this.GetComponent<PlayerData>().currZone;
+        Debug.Log("Pole Update poleID: " + fp.id + ", inUse: " + inUse);
+        this.buttonUpdateVars(z, fp, inUse);
+    }
+}
+
+[Serializable]
+public class fishingStatuses{
+    public fishingStatus[] statuses = new fishingStatus[3];
+    public int activeNum = 0;
+    public int maxActive = 1;
+
+    public fishingStatuses(){
+        statuses[0] = new fishingStatus();
+        statuses[1] = new fishingStatus();
+        statuses[2] = new fishingStatus();
+    }
+
+    public bool canFish(){
+        return (activeNum < maxActive);
+    }
+
+    public int startFishing(Zone z, FishingPole fp){
+        if (activeNum < maxActive){
+            activeNum += 1;
+            TimeSpan timeTillBite = z.randomDuration(fp.hook, fp.bait);
+
+            fishingStatus fs = new fishingStatus();
+            fs.active = true;
+            fs.poleID = fp.id;
+            fs.zoneIndex = z.index;
+            fs.startTime = new serialDateTime(DateTime.Now);
+            fs.biteTime = new serialDateTime(DateTime.Now + timeTillBite);
+            fs.biteDuration = new serialTimeSpan(0, 20 + (fp.reel * 2), 0);
+            fs.minTime = z.serialMinTime(fp.hook);
+            fs.maxTime = z.serialMaxTime(fp.bait);
+
+            int i = 0;
+            while (i < 3){
+                if (!statuses[i].active){
+                    statuses[i] = fs;
+                    return i;
+                }
+                i += 1;
+            }
+            return -1;
+        } else {
+            return -1;
+        }
+    }
+
+    public void addMissID(Zone z, string m){
+        int zoneInd = z.index;
+        int i = 0;
+        while (i < 3){
+            if (statuses[i].zoneIndex == zoneInd){
+                statuses[i].missID = m;
+                i = 3;
+            }
+            i += 1;
+        }
+    }
+
+    public void stopFishing(Zone z){
+        int zoneInd = z.index;
+        int i = 0;
+        while (i < 3){
+            if (statuses[i].zoneIndex == zoneInd){
+                statuses[i].active = false;
+                i = 3;
+            }
+            i += 1;
+        }
+        activeNum -= 1;
+    }
+
+    public fishingStatus activeInZone(Zone z){
+        int zoneInd = z.index;
+        int i = 0;
+        while (i < 3){
+            if (statuses[i].zoneIndex == zoneInd && statuses[i].active){
+                return statuses[i];
+            }
+            i += 1;
+        }
+        return null;
+    }
+
+
 }
 
 [Serializable]
 public class fishingStatus{
     public string missID;
+    public int poleID;
     public int zoneIndex;
-    public bool actuallyFishing;
+    public bool active;
     public serialDateTime startTime;
     public serialDateTime biteTime;
     public serialTimeSpan biteDuration;
     public serialTimeSpan minTime;
     public serialTimeSpan maxTime;
+
+    public fishingStatus(){
+        active = false;
+    }
+
+    public DateTime getAwayTime(){
+        return biteTime.deserialize() + biteDuration.deserialize();
+    }
+
+    public TimeSpan timeTillBite(){
+        return biteTime.deserialize() - DateTime.Now;
+    }
 }

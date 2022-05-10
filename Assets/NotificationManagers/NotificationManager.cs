@@ -19,7 +19,7 @@ public class NotificationManager : MonoBehaviour
         
     }
 
-    public virtual string scheduleNotification(TimeSpan fromNow, TimeSpan duration){
+    public virtual string scheduleNotification(TimeSpan fromNow, TimeSpan duration, int id){
         //Code goes here
         return "BAD";
     }

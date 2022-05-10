@@ -14,6 +14,7 @@ public class PoleDisplayLarge : MonoBehaviour
     public GameObject Item;
     public GameObject Buttons;
     public GameObject DestroyButton;
+    public GameObject inUseIcon;
 
     public void buttonsActive(bool a){
         Buttons.SetActive(a);
@@ -54,5 +55,9 @@ public class PoleDisplayLarge : MonoBehaviour
         Charm.gameObject.SetActive(a);
         Item.SetActive(a);
         DestroyButton.SetActive(a);
+    }
+
+    public void inUse(bool a){
+        inUseIcon.SetActive(a);
     }
 }

@@ -22,7 +22,7 @@ public class iOS_Notif_Manager : NotificationManager
         
     }
 
-    public override string scheduleNotification(TimeSpan fromNow, TimeSpan duration){
+    public override string scheduleNotification(TimeSpan fromNow, TimeSpan duration, int id){
         var timeTriggerA = new iOSNotificationTimeIntervalTrigger()
         {
             TimeInterval = fromNow,
@@ -33,7 +33,7 @@ public class iOS_Notif_Manager : NotificationManager
         {
             // You can specify a custom identifier which can be used to manage the notification later.
             // If you don't provide one, a unique string will be generated automatically.
-            Identifier = "fishingCaughtA",
+            Identifier = "fishingCaught" + id,
             Title = "A Bite!",
             Body = "You caught something! Check in in the next " + duration.Minutes + " minutes to claim it!",
             Subtitle = "N/A",
@@ -56,7 +56,7 @@ public class iOS_Notif_Manager : NotificationManager
         {
             // You can specify a custom identifier which can be used to manage the notification later.
             // If you don't provide one, a unique string will be generated automatically.
-            Identifier = "fishingMissedA",
+            Identifier = "fishingMissed" + id,
             Title = "Too Slow!",
             Body = "You caught something, but it got away! Better luck next time.",
             Subtitle = "N/A",

@@ -8,20 +8,9 @@ public class CatchButton : MonoBehaviour
     bool success = true;
     public PlayerData player;
     public FishingManager fishMan;
+    public PoleManager poleMan;
 
     public GameObject rewardPanel;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void fail(){
         success = false;
@@ -29,17 +18,21 @@ public class CatchButton : MonoBehaviour
     }
 
     public void onClick(){
+        Zone z = player.currZone;
+        fishingStatus fs = fishMan.currFishing.activeInZone(z);
+        FishingPole fp = poleMan.getPoleByID(fs.poleID);
         if (success){
-            Zone z = player.currZone;
-            fishRarity r = z.catchFish(player.canSpecial(), 0, fishMan.currFishing);
+            poleMan.weaken(z.durCost, fp);
+            fishRarity r = z.catchFish(player.canSpecial(), fp, fs);
             fishSize s = (fishSize) Random.Range(0,4);
             int p = player.getFish(r, s);
             FishObj f = z.rarityCatch(r);
-            rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, 1);
+            rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, z.durCost);
             rewardPanel.SetActive(true);
         } else {
             success = true;
             fishMan.fishingButton.interactable = true;
         }
+        poleMan.stopUsing(fs.poleID);
     }
 }

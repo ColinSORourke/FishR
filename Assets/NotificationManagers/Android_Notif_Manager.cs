@@ -31,7 +31,7 @@ public class Android_Notif_Manager : NotificationManager
         
     }
 
-    public override string scheduleNotification(TimeSpan fromNow, TimeSpan duration){
+    public override string scheduleNotification(TimeSpan fromNow, TimeSpan duration, int id){
         var notificationA = new AndroidNotification();
         notificationA.Title = "A Bite!";
         notificationA.Text = "You caught something! Check in in the next " + duration.Minutes + " minutes to claim it!";

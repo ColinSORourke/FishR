@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: This Zone has a looooong timer
   unlockCost: 0
   hintCost: 0
+  durCost: 3
   background: {fileID: 21300000, guid: 3d98e626797a54b51a47218b620ba757, type: 3}
   banner: {fileID: 0}
   baseMinTime:

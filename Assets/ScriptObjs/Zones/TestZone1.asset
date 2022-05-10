@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: We are here for testing
   unlockCost: 0
   hintCost: 0
+  durCost: 12
   background: {fileID: 21300000, guid: b55f6bdbe5c69401cbbe8f6092a3a33b, type: 3}
   banner: {fileID: 0}
   baseMinTime:
