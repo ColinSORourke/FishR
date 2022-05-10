@@ -71,10 +71,10 @@ public class Zone : ScriptableObject
         if ( canSpecial && specialCondition(status, fp) ){
             return fishRarity.special;
         } else {
-            int myRand = Random.Range(0, 1001);
-            if (myRand > (950 - (5 * luck))){
+            int myRand = Random.Range(0, 10001);
+            if (myRand > (9500 - (75 * luck))){
                 return fishRarity.rare;
-            } else if (myRand > (800 - (10 * luck) ) ){
+            } else if (myRand > (8000 - (125 * luck) ) ){
                 return fishRarity.uncommon;
             } else {
                 return fishRarity.common;
