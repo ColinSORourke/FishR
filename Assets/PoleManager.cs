@@ -131,6 +131,7 @@ public class PoleManager : MonoBehaviour
         if (lockedPole == -2){
             poleDisplay.transform.Find("LuckColor").Find("LuckText").GetComponent<Text>().text = p.charm + "";
             poleDisplay.transform.Find("ReelColor").Find("ReelText").GetComponent<Text>().text = p.reel + "";
+            poleDisplay.transform.Find("NameBG").Find("NameText").GetComponent<Text>().text = p.name;
             poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
         } else {
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
@@ -160,8 +161,9 @@ public class PoleManager : MonoBehaviour
         FishingPole p = myPoles.getPole(lockedPole);
 
         myPoles.currSelectPole = lockedPole;
-        poleDisplay.transform.Find("LuckText").GetComponent<Text>().text = p.charm + "";
-        poleDisplay.transform.Find("ReelText").GetComponent<Text>().text = p.reel + "";
+        poleDisplay.transform.Find("LuckColor").Find("LuckText").GetComponent<Text>().text = p.charm + "";
+        poleDisplay.transform.Find("ReelColor").Find("ReelText").GetComponent<Text>().text = p.reel + "";
+        poleDisplay.transform.Find("NameBG").Find("NameText").GetComponent<Text>().text = p.name;
         poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
         poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
     }
