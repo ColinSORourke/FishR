@@ -32,13 +32,19 @@ public class PoleManager : MonoBehaviour
     
     void Start()
     {
-        
-
         if (myPoles.myPolesLen > 0){
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
             PDL.buttonsActive(true);
+        } else {
+            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
+    }
+
+    public void eraseData(){
+        myPoles = new playerPoleSave();
+        save();
     }
 
     public void save(){
@@ -123,8 +129,8 @@ public class PoleManager : MonoBehaviour
         PDL.inUse(this.myPoles.inUseQ());
 
         if (lockedPole == -2){
-            poleDisplay.transform.Find("LuckText").GetComponent<Text>().text = p.charm + "";
-            poleDisplay.transform.Find("ReelText").GetComponent<Text>().text = p.reel + "";
+            poleDisplay.transform.Find("LuckColor").Find("LuckText").GetComponent<Text>().text = p.charm + "";
+            poleDisplay.transform.Find("ReelColor").Find("ReelText").GetComponent<Text>().text = p.reel + "";
             poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
         } else {
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
@@ -162,7 +168,9 @@ public class PoleManager : MonoBehaviour
 
     public void unlockPole(){
         lockedPole = -2;
-        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        if (myPoles.myPolesLen > 0){
+            poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        }
         this.updatePoleDisplay();
     }
 }

@@ -24,6 +24,7 @@ public class FishingManager : MonoBehaviour
             currFishing = JsonUtility.FromJson<fishingStatuses>(JSON);
         } else {
             currFishing = new fishingStatuses();
+            saveFishing();
         }
     }
 
@@ -81,8 +82,9 @@ public class FishingManager : MonoBehaviour
             this.GetComponent<PoleManager>().startUsing();
             fishingStatus fs = currFishing.activeInZone(z);
             fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
-            string missID = notifs.scheduleNotification(fs.timeTillBite(), fs.biteDuration.deserialize(), i);
-            currFishing.addMissID(z, missID);
+            string notifIDString = notifs.scheduleNotification(fs.timeTillBite(), fs.biteDuration.deserialize(), i);
+            string[] notifIDs = notifIDString.Split('\n');
+            currFishing.addIDs(z, notifIDs[0], notifIDs[1]);
             saveFishing();
             halfMinuteTick();
         }
@@ -104,6 +106,20 @@ public class FishingManager : MonoBehaviour
         string json = JsonUtility.ToJson(currFishing);
         Debug.Log("Saving Fishing Data");
         System.IO.File.WriteAllText(Application.persistentDataPath + "/FishingData.json", json);
+    }
+
+    public void eraseData(){
+        int i = 0;
+        while (i < 3){
+            fishingStatus fs = currFishing.statuses[i];
+            if (fs != null){
+                notifs.unscheduleMiss(fs.catchID);
+                notifs.unscheduleMiss(fs.missID);
+            }
+            i += 1;
+        }
+        currFishing = new fishingStatuses();
+        saveFishing();
     }
 
     public void buttonUpdateVars(Zone z, FishingPole fp, bool inUse){
@@ -190,12 +206,13 @@ public class fishingStatuses{
         }
     }
 
-    public void addMissID(Zone z, string m){
+    public void addIDs(Zone z, string a, string b){
         int zoneInd = z.index;
         int i = 0;
         while (i < 3){
             if (statuses[i].zoneIndex == zoneInd){
-                statuses[i].missID = m;
+                statuses[i].catchID = a;
+                statuses[i].missID = b;
                 i = 3;
             }
             i += 1;
@@ -232,6 +249,7 @@ public class fishingStatuses{
 
 [Serializable]
 public class fishingStatus{
+    public string catchID;
     public string missID;
     public int poleID;
     public int zoneIndex;

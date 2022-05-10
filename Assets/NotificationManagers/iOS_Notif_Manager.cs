@@ -68,7 +68,7 @@ public class iOS_Notif_Manager : NotificationManager
         };
 
         iOSNotificationCenter.ScheduleNotification(notificationB);
-        return notificationB.Identifier;
+        return notificationA.Identifier + "\n" + notificationB.Identifier;
     }
 
     public override void unscheduleMiss(string id){

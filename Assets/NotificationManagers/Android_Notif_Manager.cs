@@ -38,7 +38,7 @@ public class Android_Notif_Manager : NotificationManager
         notificationA.ShouldAutoCancel = true;
         notificationA.FireTime = System.DateTime.Now + fromNow;
 
-        AndroidNotificationCenter.SendNotification(notificationA, myChannel.Id);
+        var catchID = Convert.ToString( AndroidNotificationCenter.SendNotification(notificationA, myChannel.Id) );
 
         var notificationB = new AndroidNotification();
         notificationB.Title = "Too Slow!";
@@ -47,7 +47,7 @@ public class Android_Notif_Manager : NotificationManager
         notificationB.FireTime = System.DateTime.Now + fromNow + duration;
 
         var missID = Convert.ToString( AndroidNotificationCenter.SendNotification(notificationB, myChannel.Id) );
-        return missID;
+        return catchID + "\n" + missID;
     }
 
     public override void unscheduleMiss(string id){

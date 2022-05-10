@@ -101,6 +101,11 @@ public class PlayerData : MonoBehaviour
         System.IO.File.WriteAllText(Application.persistentDataPath + "/PlayerData.json", json);
     }
 
+    public void eraseData(){
+        myData = new playerSaveData();
+        save();
+    }
+
     public void purchaseHint(){
         myData.cash -= currZone.hintCost;
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
@@ -122,6 +127,7 @@ public class playerSaveData{
             allZoneData[i] = new zoneData();
             i += 1;
         }
+        allZoneData[0].unlocked = true;
     }
 }
 
