@@ -10,8 +10,6 @@ public class FishObj : ScriptableObject
 {
     public string fishName;
     public string description;
-    public string hint;
-    public string condition;
 
     public Sprite icon;
 

@@ -14,6 +14,8 @@ public class PoleManager : MonoBehaviour
     private PoleDisplayLarge PDL;
     public FishingManager catchMan; 
     public int lockedPole = -2;
+
+    public Sprite[] poleSprites = new Sprite[10];
     // Start is called before the first frame update
     void Awake(){
         PDL = PDLObj.GetComponent<PoleDisplayLarge>();
@@ -125,7 +127,8 @@ public class PoleManager : MonoBehaviour
 
     public void updatePoleDisplay(){
         FishingPole p = this.getPole();
-        PDL.displayPole(p);
+        PDL.displayPole(p, getSprite(p.spriteID));
+        poleDisplay.GetComponent<Image>().sprite = getSprite(p.spriteID);
         PDL.inUse(this.myPoles.inUseQ());
 
         if (lockedPole == -2){
@@ -174,6 +177,13 @@ public class PoleManager : MonoBehaviour
             poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
         }
         this.updatePoleDisplay();
+    }
+
+    public Sprite getSprite(int id){
+        if (id < poleSprites.Length){
+            return poleSprites[id];
+        }
+        return poleSprites[0];
     }
 }
 
@@ -311,6 +321,7 @@ public class FishingPole {
     public int charm;
     public int durability;
     public int currDur;
+    public int spriteID;
     // public item bobber;
     // public tier rank;
     
@@ -323,6 +334,7 @@ public class FishingPole {
         charm = 0;
         durability = -1;
         currDur = -1;
+        spriteID = 0;
     }
 
     public FishingPole(int i, int Budget){
@@ -335,6 +347,7 @@ public class FishingPole {
             charm = Random.Range(0, 21);
             durability = 10 + Random.Range(0, 21);
             currDur = durability;
+            spriteID = Random.Range(0,6);
         }
         // TO IMPLEMENT
     }
@@ -348,6 +361,7 @@ public class FishingPole {
         charm = c;
         durability = 10 + d;
         currDur = durability;
+        spriteID = Random.Range(0,6);
     }
 
     public void addItem(){

@@ -37,10 +37,13 @@ public class FishPanel : MonoBehaviour
                 break;
         }
 
+        var flavorText = this.transform.Find("FlavorText");
         if (specialCaught || myFishData.caught){
             this.transform.Find("FishName").GetComponent<Text>().text = myFish.fishName;
+            flavorText.GetComponent<Text>().text = myFish.description;
         } else {
             this.transform.Find("FishName").GetComponent<Text>().text = "Unknown";
+            flavorText.GetComponent<Text>().text = "???\n???\n???";
         }
         
 
@@ -75,31 +78,6 @@ public class FishPanel : MonoBehaviour
         } else {
             caughtText.GetComponent<Text>().text = "Not Caught Yet";
         }
-
-        var flavorText = this.transform.Find("FlavorText");
-        if (myRarity == fishRarity.special){
-            if (specialCaught){
-                flavorText.GetComponent<Text>().text = myFish.description + "\n" + myFish.condition;
-                this.transform.Find("HintBuy").gameObject.SetActive(false);
-            } else if (fullZone.unlockedHint){
-                flavorText.GetComponent<Text>().text = myFish.hint;
-                this.transform.Find("HintBuy").gameObject.SetActive(false);
-            } else {
-                flavorText.GetComponent<Text>().text = "???\n Purchase Hint for " + playerData.currZone.hintCost + " BaitBux?\n???";
-                this.transform.Find("HintBuy").gameObject.SetActive(true);
-            }
-        } else {
-            if (myFishData.caught){
-                flavorText.GetComponent<Text>().text = myFish.description;
-            } else {
-                flavorText.GetComponent<Text>().text = "???\n???\n???";
-            }
-        }
-    }
-
-    public void unlockHint(){
-        this.transform.Find("FlavorText").GetComponent<Text>().text = myFish.hint;
-        this.transform.Find("HintBuy").gameObject.SetActive(false);
     }
 }
 

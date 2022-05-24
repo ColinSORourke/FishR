@@ -11,19 +11,22 @@ public class PoleDisplayLarge : MonoBehaviour
     public Transform Charm;
     public Transform Reel;
     public Text Name;
+    public Image mainIcon;
     public GameObject Item;
     public GameObject Buttons;
     public GameObject DestroyButton;
     public GameObject inUseIcon;
+    
 
     public void buttonsActive(bool a){
         Buttons.SetActive(a);
     }
 
-    public void displayPole(FishingPole fp){
+    public void displayPole(FishingPole fp, Sprite fpIcon){
         if (fp.id != 0){
             showStats(true);
             Name.text = fp.name;
+            mainIcon.sprite = fpIcon;
 
             // Pares Pole Icon HERE
             RectTransform durRT = Durability.GetComponent<RectTransform>();
@@ -32,18 +35,19 @@ public class PoleDisplayLarge : MonoBehaviour
             Durability.transform.GetChild(1).GetComponent<Text>().text = "Durability: " + fp.currDur + "/" + fp.durability;
 
             Bait.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.bait / 20.0f;
-            Bait.GetChild(2).gameObject.GetComponent<Text>().text = fp.bait + "\nBait";
+            Bait.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.bait + " Bait";
             Hook.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.hook / 20.0f;
-            Hook.GetChild(2).gameObject.GetComponent<Text>().text = fp.hook + "\nHook";
+            Hook.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.hook + " Hook";
             Reel.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.reel / 20.0f;
-            Reel.GetChild(2).gameObject.GetComponent<Text>().text = fp.reel + "\nReel";
+            Reel.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.reel + " Reel";
             Charm.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.charm / 20.0f;
-            Charm.GetChild(2).gameObject.GetComponent<Text>().text = fp.charm + "\nCharm";
+            Charm.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.charm + " Charm";
 
             // Parse Item HERE
         } else {
             showStats(false);
             Name.text = fp.name;
+            mainIcon.sprite = fpIcon;
         }
     }
 

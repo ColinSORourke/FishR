@@ -15,6 +15,9 @@ public class Zone : ScriptableObject
     public int hintCost;
     public int durCost;
 
+    public string hint;
+    public string fullHint;
+
     public Sprite background;
     public Sprite banner;
 
@@ -31,7 +34,7 @@ public class Zone : ScriptableObject
 
     public virtual bool specialCondition(fishingStatus status, FishingPole fp){
 
-        return true;
+        return false;
     }
 
     public TimeSpan minTime(int hook){

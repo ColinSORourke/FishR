@@ -78,7 +78,9 @@ public class PlayerData : MonoBehaviour
         }
         myData.cash += Mathf.RoundToInt(payout);
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
-        myData.allZoneData[currZone.index].catchRarity(theRarity, size);
+        if (myData.allZoneData[currZone.index].catchRarity(theRarity, size)){
+            myData.gainScore(theRarity);
+        }
         save();
         return Mathf.RoundToInt(payout);
     }
@@ -117,10 +119,12 @@ public class PlayerData : MonoBehaviour
 [Serializable]
 public class playerSaveData{
     public int cash;
+    public int collectionScore;
     public zoneData[] allZoneData;
 
     public playerSaveData(){
-        cash = 100;
+        cash = 0;
+        collectionScore = 0;
         allZoneData = new zoneData[10];
         int i = 0;
         while (i < allZoneData.Length){
@@ -129,12 +133,30 @@ public class playerSaveData{
         }
         allZoneData[0].unlocked = true;
     }
+
+    public void gainScore(fishRarity r){
+        switch(r){
+            case fishRarity.common:
+                collectionScore += 1;
+                break;
+            case fishRarity.uncommon:
+                collectionScore += 2;
+                break;
+            case fishRarity.rare:
+                collectionScore += 3;
+                break;
+            case fishRarity.special:
+                collectionScore += 4;
+                break;
+        }
+    }
 }
 
 [Serializable]
 public class zoneData{
     public bool unlocked;
     public bool unlockedHint;
+    public int zoneScore;
     public fishData commonData;
     public fishData uncommonData;
     public fishData rareData;
@@ -147,13 +169,17 @@ public class zoneData{
         uncommonData = new fishData();
         rareData = new fishData();
         specialCaught = false;
+        zoneScore = 0;
     }
 
-    public void catchRarity(fishRarity r, fishSize s){
+    public bool catchRarity(fishRarity r, fishSize s){
+        bool firstCatch = false;
         switch(r){
             case fishRarity.common:
                 if (!commonData.caught){
                     commonData.caught = true;
+                    firstCatch = true;
+                    zoneScore += 1;
                 }
                 commonData.numCaught += 1;
                 if (s > commonData.bestSize){
@@ -163,6 +189,8 @@ public class zoneData{
             case fishRarity.uncommon:
                 if (!uncommonData.caught){
                     uncommonData.caught = true;
+                    firstCatch = true;
+                    zoneScore += 2;
                 }
                 uncommonData.numCaught += 1;
                 if (s > uncommonData.bestSize){
@@ -172,6 +200,8 @@ public class zoneData{
             case fishRarity.rare:
                 if (!rareData.caught){
                     rareData.caught = true;
+                    firstCatch = true;
+                    zoneScore += 3;
                 }
                 rareData.numCaught += 1;
                 if (s > rareData.bestSize){
@@ -180,8 +210,11 @@ public class zoneData{
                 break;
             case fishRarity.special:
                 specialCaught = true;
+                firstCatch = true;
+                zoneScore += 4;
                 break;
         }
+        return firstCatch;
     }
 }
 
