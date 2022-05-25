@@ -391,21 +391,23 @@ public class FishingPole {
     }
 
     public void levelA(){
-        int pts = 0;
-        
-        if (Random.value > 0.5f){
-            pts = Random.Range(4,11);
-            assignPointsToRandomStat(pts, true);
-        }
-
-        int secondaryRolls = Random.Range(2,5);
-        while (secondaryRolls > 0){
-            pts = Random.Range(1,5);
-            assignPointsToRandZero(pts, false);
-            secondaryRolls -= 1;
-        }
-
+        rollStats(0,1,4,10,true,false);
+        rollStats(2,4,1,4,false,true);
         clampStats();
+    }
+
+    public void rollStats(int minRolls, int maxRolls, int minVal, int maxVal, bool excludeDur, bool noStack){
+        int numRolls = Random.Range(minRolls, maxRolls + 1);
+        int pts = 0;
+        while (numRolls > 0){
+            pts = Random.Range(minVal,maxVal);
+            if (noStack){
+                assignPointsToRandZero(pts, excludeDur);
+            } else {
+                assignPointsToRandomStat(pts, excludeDur);
+            }
+            numRolls -= 1;
+        }
     }
 
     public void clampStats(){
