@@ -52,7 +52,15 @@ public class PlayerData : MonoBehaviour
         save();
     }
 
-    public void purchaseZone(Zone buyZone){
+    public void buyZone(int zoneInd){
+        Zone buyZone = allZones[zoneInd];
+        myData.cash -= buyZone.unlockCost;
+        cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
+        myData.allZoneData[buyZone.index].unlocked = true;
+        save();
+    }
+
+    public void buyZone(Zone buyZone){
         myData.cash -= buyZone.unlockCost;
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         myData.allZoneData[buyZone.index].unlocked = true;
@@ -108,10 +116,26 @@ public class PlayerData : MonoBehaviour
         save();
     }
 
-    public void purchaseHint(){
+    public void buyHint(){
         myData.cash -= currZone.hintCost;
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         myData.allZoneData[currZone.index].unlockedHint = true;
+        save();
+    }
+
+    public void buyHint(int zoneInd){
+        Zone buyZone = allZones[zoneInd];
+        myData.cash -= buyZone.hintCost;
+        cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
+        myData.allZoneData[buyZone.index].unlockedHint = true;
+        save();
+    }
+
+    public void buyPole(int cost){
+        var poleMan = this.GetComponent<PoleManager>();
+        myData.cash -= cost;
+        poleMan.addRandomPole();
+        cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         save();
     }
 }
@@ -123,7 +147,7 @@ public class playerSaveData{
     public zoneData[] allZoneData;
 
     public playerSaveData(){
-        cash = 0;
+        cash = 50;
         collectionScore = 0;
         allZoneData = new zoneData[10];
         int i = 0;

@@ -24,21 +24,12 @@ public class ZoneButton : MonoBehaviour
         this.transform.GetChild(0).GetComponent<Text>().text = myZone.zoneName;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void onClick(){
         zoneData info = playerData.myData.allZoneData[myZone.index];
         if (!info.unlocked){
             purchasePanel.SetActive(true);
-            var purchaseText = purchasePanel.transform.GetChild(3);
-            var purchaseButton = purchasePanel.transform.GetChild(1);
-            purchaseButton.GetComponent<PurchaseZoneButton>().myZone = myZone;
-            purchaseButton.GetComponent<PurchaseZoneButton>().srcButton = this;
-            purchaseText.GetComponent<Text>().text = "Do you want to purchase the " + myZone.zoneName +" zone for " + myZone.unlockCost + " BaitBux?";
+            purchasePanel.GetComponent<PurchaseScript>().zonePrompt(myZone.index);
+            purchasePanel.GetComponent<PurchaseScript>().setSrc(this.gameObject);
         } else {
             playerData.changeZone(myZone);
             zonePanel.SetActive(false);

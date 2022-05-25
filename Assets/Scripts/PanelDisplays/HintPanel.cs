@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HintPanel : MonoBehaviour
 {
     public PlayerData playerData;
+    public PurchaseScript purchase;
     zoneData fullZone;
     bool specialCaught = false;
 
@@ -23,6 +24,9 @@ public class HintPanel : MonoBehaviour
             this.transform.GetChild(0).gameObject.SetActive(false);
             this.transform.GetChild(1).gameObject.SetActive(true);
             this.transform.GetChild(1).gameObject.GetComponent<Text>().text = playerData.currZone.hint;
+        } else {
+            this.transform.GetChild(0).gameObject.SetActive(true);
+            this.transform.GetChild(1).gameObject.SetActive(false);
         }
     }
 
@@ -30,5 +34,9 @@ public class HintPanel : MonoBehaviour
         this.transform.GetChild(0).gameObject.SetActive(false);
         this.transform.GetChild(1).gameObject.SetActive(true);
         this.transform.GetChild(1).gameObject.GetComponent<Text>().text = playerData.currZone.hint; 
+    }
+
+    public void setPurchaseSrc(){
+        purchase.setSrc(this.gameObject);
     }
 }

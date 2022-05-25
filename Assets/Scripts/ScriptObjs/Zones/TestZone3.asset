@@ -15,9 +15,11 @@ MonoBehaviour:
   zoneName: Long Zone
   index: 2
   Description: This Zone has a looooong timer
-  unlockCost: 0
-  hintCost: 0
+  unlockCost: 50
+  hintCost: 50
   durCost: 3
+  hint: 
+  fullHint: 
   background: {fileID: 21300000, guid: 3d98e626797a54b51a47218b620ba757, type: 3}
   banner: {fileID: 0}
   baseMinTime:

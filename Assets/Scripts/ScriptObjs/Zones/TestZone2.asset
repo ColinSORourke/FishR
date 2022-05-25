@@ -15,9 +15,11 @@ MonoBehaviour:
   zoneName: TestZone2
   index: 1
   Description: We are here for more testing
-  unlockCost: 100
-  hintCost: 100
+  unlockCost: 20
+  hintCost: 20
   durCost: 2
+  hint: 
+  fullHint: 
   background: {fileID: 21300000, guid: eae65ad3b03a44f349a953f4f34511c0, type: 3}
   banner: {fileID: 0}
   baseMinTime:

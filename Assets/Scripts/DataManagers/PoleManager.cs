@@ -103,6 +103,7 @@ public class PoleManager : MonoBehaviour
         save();
         poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
         PDL.buttonsActive(true);
+        this.updatePoleDisplay();
     }
 
     public void deleteRandomPole(){
@@ -184,6 +185,10 @@ public class PoleManager : MonoBehaviour
             return poleSprites[id];
         }
         return poleSprites[0];
+    }
+
+    public bool fullInv(){
+        return myPoles.myPolesLen == 5;
     }
 }
 
@@ -293,6 +298,7 @@ public class playerPoleSave {
         
             FishingPole newPole = new FishingPole(polesBought, -1);
             myPoles.Add(newPole);
+            currSelectPole = myPolesLen;
             myPolesLen += 1;
         }
     }
