@@ -106,6 +106,28 @@ public class PoleManager : MonoBehaviour
         this.updatePoleDisplay();
     }
 
+    public void addLevelPole(int i){
+        myPoles.addBudgetPole(i);
+        save();
+        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        PDL.buttonsActive(true);
+        this.updatePoleDisplay();
+    }
+
+    public void addExactPole(int h, int b, int r, int c, int d){
+        myPoles.addExactPole(h, b, r, c, d);
+        save();
+        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        PDL.buttonsActive(true);
+        this.updatePoleDisplay();
+    }
+
+    public void setNameIcon(string name, int icon){
+        myPoles.setNameIcon(name, icon);
+        this.updatePoleDisplay();
+        save();
+    }
+
     public void deleteRandomPole(){
         myPoles.removeRandomPole();
         save();
@@ -296,7 +318,29 @@ public class playerPoleSave {
         if (myPolesLen < 5){
             polesBought += 1;
         
-            FishingPole newPole = new FishingPole(polesBought, 0);
+            FishingPole newPole = new FishingPole(polesBought, -1);
+            myPoles.Add(newPole);
+            currSelectPole = myPolesLen;
+            myPolesLen += 1;
+        }
+    }
+
+    public void addBudgetPole(int i){
+        if (myPolesLen < 5){
+            polesBought += 1;
+        
+            FishingPole newPole = new FishingPole(polesBought, i);
+            myPoles.Add(newPole);
+            currSelectPole = myPolesLen;
+            myPolesLen += 1;
+        }
+    }
+
+    public void addExactPole(int h, int b, int r, int c, int d){
+        if (myPolesLen < 5){
+            polesBought += 1;
+        
+            FishingPole newPole = new FishingPole(polesBought, h, b, r, c, d);
             myPoles.Add(newPole);
             currSelectPole = myPolesLen;
             myPolesLen += 1;
@@ -313,6 +357,12 @@ public class playerPoleSave {
     public void removeCurrentPole(){
         if (myPolesLen > 0 && currSelectPole != -1){
             this.remove(currSelectPole);
+        }
+    }
+
+    public void setNameIcon(string n, int i){
+        if (currSelectPole != -1){
+            myPoles[currSelectPole].setNameIcon(n, i);
         }
     }
 }
@@ -475,9 +525,14 @@ public class FishingPole {
         bait = b;
         reel = r;
         charm = c;
-        durability = 10 + d;
+        durability = 5 + d;
         currDur = durability;
         spriteID = Random.Range(0,6);
+    }
+
+    public void setNameIcon(string n, int i){
+        name = n;
+        spriteID = i;
     }
 
     public void addItem(){

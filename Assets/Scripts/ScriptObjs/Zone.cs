@@ -132,16 +132,27 @@ public class serialDateTime{
     public int minutes;
     public int seconds;
 
-    public serialDateTime(DateTime original){
+    public serialDateTime(DateTime original, bool ignoreTOD = false){
         year = original.Year;
         month = original.Month;
         day = original.Day;
-        hours = original.Hour;
-        minutes = original.Minute;
-        seconds = original.Second;
+        if (!ignoreTOD){
+            hours = original.Hour;
+            minutes = original.Minute;
+            seconds = original.Second;
+        } 
     }
 
-    public serialDateTime(int y, int mon, int d, int h, int m, int s){
+    public bool matchDate(serialDateTime other){
+        return (year == other.year && month == other.month && day == other.day);
+    }
+
+    public int toSeed(){
+        int result = year + (month * 100) + day;
+        return result;
+    }
+
+    public serialDateTime(int y, int mon, int d, int h = 0, int m = 0, int s = 0){
         year = y;
         month = mon;
         day = d;
@@ -150,7 +161,12 @@ public class serialDateTime{
         seconds = s;
     }
 
-    public DateTime deserialize(){
-        return new DateTime(year, month, day, hours, minutes, seconds);
+    public DateTime deserialize(bool ignoreTOD = false){
+        if (!ignoreTOD){
+            return new DateTime(year, month, day, hours, minutes, seconds);
+        } else {
+            return new DateTime(year, month, day, 0, 0, 0);
+        }
+        
     }
 }

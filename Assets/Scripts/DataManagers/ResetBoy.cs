@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class ResetBoy : MonoBehaviour
 {
+    public ShopPanel shop;
+
     public void RestartGame() {
         this.transform.GetComponent<PlayerData>().eraseData();
         this.transform.GetComponent<FishingManager>().eraseData();
         this.transform.GetComponent<PoleManager>().eraseData();
+        shop.eraseData();
 
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
