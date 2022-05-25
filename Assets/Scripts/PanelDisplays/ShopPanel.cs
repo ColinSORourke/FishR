@@ -12,10 +12,12 @@ public class ShopPanel : MonoBehaviour
     public PoleManager poleMan;
     public Transform POTDPanel;
 
+    public int cost;
     int daysInFuture = 0;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        cost = 20;
         if (System.IO.File.Exists(Application.persistentDataPath + "/POTD.json"))
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/POTD.json"); 
@@ -55,6 +57,8 @@ public class ShopPanel : MonoBehaviour
         POTDPanel.GetChild(7).GetComponent<Button>().interactable = !currPOTD.purchased;
         if (currPOTD.purchased){
             POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = "Purchased!";
+        } else {
+            POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = cost + " Baitbux";
         }
     }   
 
@@ -93,17 +97,14 @@ public class PoleOfTheDay {
         previousDay = new serialDateTime(DateTime.Now, true);
         purchased = false;
         ulong seed = Convert.ToUInt64( previousDay.toSeed() );
-        Debug.Log(seed);
         int i = 0;
         while (i < 5){
-            Debug.Log(seed);
             seed = pseudoRandom(seed);
             i += 1;
         }
         i = 0;
         while (i < 5){
             seed = pseudoRandom(seed);
-            Debug.Log(seed);
             poleStats[i] = Convert.ToInt32 ( seed % 11 );
             i += 1;
         }
@@ -112,22 +113,20 @@ public class PoleOfTheDay {
     public void checkDay(){
         serialDateTime currentDay = new serialDateTime(DateTime.Now, true);
         if (!previousDay.matchDate(currentDay)){
+            Debug.Log("New Day");
             previousDay = currentDay;
 
             purchased = false;
 
             ulong seed = Convert.ToUInt64( currentDay.toSeed() );
-            Debug.Log(seed);
             int i = 0;
             while (i < 5){
-                Debug.Log(seed);
                 seed = pseudoRandom(seed);
                 i += 1;
             }
             i = 0;
             while (i < 5){
                 seed = pseudoRandom(seed);
-                Debug.Log(seed);
                 poleStats[i] = Convert.ToInt32 ( seed % 11 );
                 i += 1;
             }
@@ -138,22 +137,20 @@ public class PoleOfTheDay {
     public void checkDay(DateTime check){
         serialDateTime currentDay = new serialDateTime(check, true);
         if (!previousDay.matchDate(currentDay)){
+            Debug.Log("New Day");
             previousDay = currentDay;
 
             purchased = false;
 
             ulong seed = Convert.ToUInt64( currentDay.toSeed() );
-            Debug.Log(seed);
             int i = 0;
             while (i < 5){
-                Debug.Log(seed);
                 seed = pseudoRandom(seed);
                 i += 1;
             }
             i = 0;
             while (i < 5){
                 seed = pseudoRandom(seed);
-                Debug.Log(seed);
                 poleStats[i] = Convert.ToInt32 ( seed % 11 );
                 i += 1;
             }

@@ -131,10 +131,10 @@ public class PlayerData : MonoBehaviour
         save();
     }
 
-    public void buyPole(int cost){
+    public void buyPole(int cost, int budget){
         var poleMan = this.GetComponent<PoleManager>();
         myData.cash -= cost;
-        poleMan.addRandomPole();
+        poleMan.addLevelPole(budget);
         cashText.GetComponent<Text>().text = "Cash: " + myData.cash;
         save();
     }

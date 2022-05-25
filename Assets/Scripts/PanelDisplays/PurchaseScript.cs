@@ -10,6 +10,7 @@ public class PurchaseScript : MonoBehaviour
     public PoleManager poleMan;
     public Button confirmButton;
     public Text promptText;
+    public ShopPanel POTDShop;
 
     public GameObject srcButton;
 
@@ -49,9 +50,14 @@ public class PurchaseScript : MonoBehaviour
         srcButton.GetComponent<HintPanel>().unlockHint();
     }
 
-    public void polePrompt(){
+    public void polePrompt(int budget){
         currType = purchaseType.pole;
-        purchaseCost = 100;
+        zoneIndex = budget;
+        switch(budget){
+            case 0:
+                purchaseCost = 10;
+                break;
+        }
         canAfford();
         if (poleMan.fullInv()){
             confirmButton.interactable = false;
@@ -59,12 +65,25 @@ public class PurchaseScript : MonoBehaviour
         promptText.text = "Purchase a new fishing pole for " + purchaseCost + " BaitBux?";
     }
 
+    public void poleOTDPrompt(){
+        currType = purchaseType.poleOTD;
+        purchaseCost = POTDShop.cost;
+        promptText.text = "Purchase Daily Pole for " + purchaseCost + " BaitBux?";
+        canAfford();
+    }
+
+    public void poleOTDConfirm(){
+        POTDShop.purchasePOTD();
+        theData.getMoney(-purchaseCost);
+    }
+
     public void polePurchase(){
-        theData.buyPole(purchaseCost);
+        theData.buyPole(purchaseCost, zoneIndex);
     }
 
     public void eraseAllPrompt(){
         currType = purchaseType.eraseAll;
+        confirmButton.interactable = true;
         promptText.text = "Are you sure you want to erase all data?";
     }
 
@@ -99,6 +118,9 @@ public class PurchaseScript : MonoBehaviour
             case purchaseType.deletePole:
                 deletePoleConfirm();
                 break;
+            case purchaseType.poleOTD:
+                poleOTDConfirm();
+                break;
         }
     }
 
@@ -117,4 +139,5 @@ public enum purchaseType{
     pole = 3,
     eraseAll = 4,
     deletePole = 5,
+    poleOTD = 6
 }
