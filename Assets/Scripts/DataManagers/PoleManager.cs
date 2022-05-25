@@ -296,7 +296,7 @@ public class playerPoleSave {
         if (myPolesLen < 5){
             polesBought += 1;
         
-            FishingPole newPole = new FishingPole(polesBought, -1);
+            FishingPole newPole = new FishingPole(polesBought, 0);
             myPoles.Add(newPole);
             currSelectPole = myPolesLen;
             myPolesLen += 1;
@@ -321,11 +321,38 @@ public class playerPoleSave {
 public class FishingPole {
     public int id;
     public string name;
-    public int hook;
-    public int bait;
-    public int reel;
-    public int charm;
-    public int durability;
+    public int[] stats = new int[] {0,0,0,0,0};
+
+    public int hook{
+        get => stats[0];
+        set {
+            stats[0] = value;
+        }
+    }
+    public int bait{
+        get => stats[1];
+        set {
+            stats[1] = value;
+        }
+    }
+    public int reel{
+        get => stats[2];
+        set {
+            stats[2] = value;
+        }
+    }
+    public int charm{
+        get => stats[3];
+        set {
+            stats[3] = value;
+        }
+    }
+    public int durability{
+        get => stats[4] + 5;
+        set {
+            stats[4] = value - 5;
+        }
+    }
     public int currDur;
     public int spriteID;
     // public item bobber;
@@ -354,8 +381,89 @@ public class FishingPole {
             durability = 5 + Random.Range(0, 11);
             currDur = durability;
             spriteID = Random.Range(0,6);
+        } else if (Budget == 0){
+            durability = 5;
+            levelA();
+            currDur = durability;
+            spriteID = Random.Range(0,6);
         }
         // TO IMPLEMENT
+    }
+
+    public void levelA(){
+        int pts = 0;
+        
+        if (Random.value > 0.5f){
+            pts = Random.Range(4,11);
+            assignPointsToRandomStat(pts, true);
+        }
+
+        int secondaryRolls = Random.Range(2,5);
+        while (secondaryRolls > 0){
+            pts = Random.Range(1,5);
+            assignPointsToRandZero(pts, false);
+            secondaryRolls -= 1;
+        }
+
+        clampStats();
+    }
+
+    public void clampStats(){
+        hook = Mathf.Min(10, hook);
+        bait = Mathf.Min(10, bait);
+        reel = Mathf.Min(10, reel);
+        charm = Mathf.Min(10, charm);
+        durability = Mathf.Min(15, durability);
+    }
+
+    public void assignPointsToRandZero(int pts, bool excludeDur){
+        int zeroCount = 0;
+        int ind = 0;
+        int statsIncluded = 5;
+        if (excludeDur) statsIncluded -= 1;
+        while (ind < statsIncluded){
+            if (stats[ind] == 0) zeroCount += 1;
+            ind += 1;
+        }
+        if (zeroCount != 0){
+            int randomSelect = Random.Range(0,zeroCount);
+            ind = 0;
+            while (ind < statsIncluded){
+                if (stats[ind] == 0){
+                    if (randomSelect == 0){
+                        stats[ind] = pts;
+                        ind = 5;
+                    } else {
+                        randomSelect -= 1;
+                    }
+                }
+                ind += 1;
+            }
+        }    
+    }
+
+    public void assignPointsToRandomStat(int pts, bool excludeDur){
+        int randomSelection = Random.Range(0,5);
+        if (excludeDur){
+            randomSelection = Random.Range(0,4);
+        }
+        switch(randomSelection){
+            case 0:
+                hook += pts;
+                break;
+            case 1:
+                bait += pts;
+                break;
+            case 2:
+                reel += pts;
+                break;
+            case 3:
+                charm += pts;
+                break;
+            case 4:
+                durability += pts;
+                break;
+        }
     }
 
     public FishingPole(int i, int h, int b, int r, int c, int d){
