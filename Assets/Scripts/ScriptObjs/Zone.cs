@@ -75,9 +75,9 @@ public class Zone : ScriptableObject
             return fishRarity.special;
         } else {
             int myRand = Random.Range(0, 10001);
-            if (myRand > (9500 - (50 * luck))){
+            if (myRand > (950 - (10 * luck))){
                 return fishRarity.rare;
-            } else if (myRand > (8000 - (75 * luck) ) ){
+            } else if (myRand > (800 - (15 * luck) ) ){
                 return fishRarity.uncommon;
             } else {
                 return fishRarity.common;

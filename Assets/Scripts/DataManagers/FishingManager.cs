@@ -188,7 +188,7 @@ public class fishingStatuses{
             fs.zoneIndex = z.index;
             fs.startTime = new serialDateTime(DateTime.Now);
             fs.biteTime = new serialDateTime(DateTime.Now + timeTillBite);
-            fs.biteDuration = new serialTimeSpan(0, 20 + (fp.reel * 2), 0);
+            fs.biteDuration = new serialTimeSpan(0, 20 + (fp.reel * 4), 0);
             fs.minTime = z.serialMinTime(fp.hook);
             fs.maxTime = z.serialMaxTime(fp.bait);
 

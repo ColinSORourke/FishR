@@ -30,17 +30,17 @@ public class PoleDisplayLarge : MonoBehaviour
 
             // Pares Pole Icon HERE
             RectTransform durRT = Durability.GetComponent<RectTransform>();
-            durRT.sizeDelta = new Vector2 (fp.durability * 20, durRT.sizeDelta.y);
+            durRT.sizeDelta = new Vector2 (fp.durability * 40, durRT.sizeDelta.y);
             Durability.transform.GetChild(0).GetComponent<Image>().fillAmount = fp.currDur / ( 0.0f + fp.durability );
             Durability.transform.GetChild(1).GetComponent<Text>().text = "Durability: " + fp.currDur + "/" + fp.durability;
 
-            Bait.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.bait / 20.0f;
+            Bait.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.bait / 10.0f;
             Bait.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.bait + " Bait";
-            Hook.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.hook / 20.0f;
+            Hook.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.hook / 10.0f;
             Hook.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.hook + " Hook";
-            Reel.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.reel / 20.0f;
+            Reel.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.reel / 10.0f;
             Reel.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.reel + " Reel";
-            Charm.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.charm / 20.0f;
+            Charm.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.charm / 10.0f;
             Charm.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.charm + " Charm";
 
             // Parse Item HERE

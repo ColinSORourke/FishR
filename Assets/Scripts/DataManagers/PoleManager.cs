@@ -347,11 +347,11 @@ public class FishingPole {
         name = "Custom Pole " + i;
         id = i;
         if (Budget == -1){
-            hook = Random.Range(0, 21);
-            bait = Random.Range(0, 21);
-            reel = Random.Range(0, 21);
-            charm = Random.Range(0, 21);
-            durability = 10 + Random.Range(0, 21);
+            hook = Random.Range(0, 11);
+            bait = Random.Range(0, 11);
+            reel = Random.Range(0, 11);
+            charm = Random.Range(0, 11);
+            durability = 5 + Random.Range(0, 11);
             currDur = durability;
             spriteID = Random.Range(0,6);
         }
