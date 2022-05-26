@@ -6763,7 +6763,7 @@ MonoBehaviour:
   poleButtonsA: {fileID: 276883361}
   poleButtonsB: {fileID: 937316418}
   tutorialText: {fileID: 1335403563}
-  ignore: 1
+  ignore: 0
   steps:
   - {fileID: 11400000, guid: b94b2699b31e54520bdb50e5be96d4c9, type: 2}
   - {fileID: 11400000, guid: 4de794a8d6c2d4a069084f7bc366d8fa, type: 2}
