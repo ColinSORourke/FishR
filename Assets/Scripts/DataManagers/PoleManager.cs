@@ -447,7 +447,7 @@ public class FishingPole {
     }
 
     public void rollStats(int minRolls, int maxRolls, int minVal, int maxVal, bool excludeDur, bool noStack){
-        int numRolls = Random.Range(minRolls, maxRolls + 1);
+        int numRolls = minRolls == maxRolls ? maxRolls : Random.Range(minRolls, maxRolls + 1);
         int pts = 0;
         while (numRolls > 0){
             pts = Random.Range(minVal,maxVal);
