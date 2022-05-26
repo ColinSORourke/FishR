@@ -6733,10 +6733,10 @@ GameObject:
   - component: {fileID: 1079849008}
   - component: {fileID: 1079849007}
   - component: {fileID: 1079849006}
-  - component: {fileID: 1079849005}
   - component: {fileID: 1079849004}
   - component: {fileID: 1079849003}
   - component: {fileID: 1079849002}
+  - component: {fileID: 1079849005}
   m_Layer: 0
   m_Name: MrManager
   m_TagString: Untagged
