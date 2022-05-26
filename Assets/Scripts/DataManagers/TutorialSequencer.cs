@@ -15,6 +15,8 @@ public class TutorialSequencer : MonoBehaviour
 
     public Text tutorialText;
 
+    public bool ignore;
+
     public TutorialStep[] steps;
     public tutorialProgress t;
 
@@ -38,34 +40,38 @@ public class TutorialSequencer : MonoBehaviour
     }
 
     public void Start(){
-        if (!t.completedSteps[0]){
+        if (!ignore){
+            if (!t.completedSteps[0]){
             TutorialScreen.SetActive(true);
-        }
-        if (!t.completedSteps[2]){
-            ShopButton.SetActive(false);
-        }
-        if (!t.completedSteps[3]){
-            poleButtonsA.SetActive(false);
-            poleButtonsB.SetActive(false);
-        }
-        if (!t.completedSteps[4]){
-            CollectButton.SetActive(false);
-            ZoneButton.SetActive(false);
+            }
+            if (!t.completedSteps[2]){
+                ShopButton.SetActive(false);
+            }
+            if (!t.completedSteps[3]){
+                poleButtonsA.SetActive(false);
+                poleButtonsB.SetActive(false);
+            }
+            if (!t.completedSteps[4]){
+                CollectButton.SetActive(false);
+                ZoneButton.SetActive(false);
+            }
         }
     }
 
     public void updateProgress(){
-        if (t.completedSteps[2]){
+        if (!ignore){
+            if (t.completedSteps[2]){
             ShopButton.SetActive(true);
-        }
-        if (t.completedSteps[3]){
-            poleButtonsA.SetActive(true);
-            poleButtonsB.SetActive(true);
-        }
-        if (t.completedSteps[4]){
-            CollectButton.SetActive(true);
-            ZoneButton.SetActive(true);
-        }
+            }
+            if (t.completedSteps[3]){
+                poleButtonsA.SetActive(true);
+                poleButtonsB.SetActive(true);
+            }
+            if (t.completedSteps[4]){
+                CollectButton.SetActive(true);
+                ZoneButton.SetActive(true);
+            }
+        } 
     }
 
     public void save(){

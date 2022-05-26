@@ -30,7 +30,7 @@ public class PoleDisplayLarge : MonoBehaviour
 
             // Pares Pole Icon HERE
             RectTransform durRT = Durability.GetComponent<RectTransform>();
-            durRT.sizeDelta = new Vector2 (fp.durability * 40, durRT.sizeDelta.y);
+            durRT.sizeDelta = new Vector2 (fp.durability * 20, durRT.sizeDelta.y);
             Durability.transform.GetChild(0).GetComponent<Image>().fillAmount = fp.currDur / ( 0.0f + fp.durability );
             Durability.transform.GetChild(1).GetComponent<Text>().text = "Durability: " + fp.currDur + "/" + fp.durability;
 

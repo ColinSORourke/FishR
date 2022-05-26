@@ -12,6 +12,10 @@ public class TimeDisplay : MonoBehaviour
         var max = z.maxTime(b);
         if (min.Minutes == 0 && max.Minutes == 0){
             this.GetComponent<Text>().text = min.Hours + " to " + max.Hours + " hours";
+        } else if (min.Hours == 0 && max.Hours == 0){
+            this.GetComponent<Text>().text = (min.Minutes).ToString("00") + " to " + (max.Minutes).ToString("00") + " minutes";
+        } else if (min.Hours == 0 && max.Hours == 1 && max.Minutes == 0){
+            this.GetComponent<Text>().text = (min.Minutes).ToString("00") + " to 60 minutes";
         } else {
             this.GetComponent<Text>().text = min.Hours + ":" + (min.Minutes).ToString("00") + " to " + max.Hours + ":" + (max.Minutes).ToString("00") + " hours";
         }
@@ -21,17 +25,27 @@ public class TimeDisplay : MonoBehaviour
         TimeSpan diffTime = DateTime.Now - fs.startTime.deserialize();
         TimeSpan maxTime = fs.maxTime.deserialize();
         TimeSpan minTime = fs.minTime.deserialize();
-        int roundMax = (minTime - diffTime).Seconds != 0 ? 1 : 0;
-        int roundMin = (minTime - diffTime).Seconds != 0 ? 1 : 0;
+        TimeSpan minRemain = minTime - diffTime;
+        TimeSpan maxRemain = maxTime - diffTime;
+        int roundMax = minRemain.Seconds != 0 ? 1 : 0;
+        int roundMin = maxRemain.Seconds != 0 ? 1 : 0;
 
         string minString;
+        string maxString = maxRemain.Hours + ":" + (maxRemain.Minutes + roundMax).ToString("00") + " hours";
         if (minTime <= diffTime){
-            minString = "0";
-        } else {
-            minString = (minTime - diffTime).Hours + ":" + ((minTime - diffTime).Minutes + roundMin).ToString("00");
+            minString = "next ";
+            if (maxRemain.Hours == 0){
+                maxString = (maxRemain.Minutes + roundMax).ToString("00") + " minutes";
+            }
+        } else if (minRemain.Hours == 0 && maxRemain.Hours == 0){
+            minString = (minRemain.Minutes + roundMin).ToString("00") + " to ";
+            maxString = (maxRemain.Minutes + roundMax).ToString("00") + " minutes";
+        } 
+        else {
+            minString = minRemain.Hours + ":" + (minRemain.Minutes + roundMin).ToString("00");
         }
-        string maxString = (maxTime - diffTime).Hours + ":" + ((maxTime - diffTime).Minutes + roundMax).ToString("00");
-        this.GetComponent<Text>().text = "Bite in " + minString + " to " + maxString + " hours from now";
+        
+        this.GetComponent<Text>().text = "Bite in " + minString + maxString + " from now";
     }
 
     public void bite(){
