@@ -11,6 +11,7 @@ public class PurchaseScript : MonoBehaviour
     public Button confirmButton;
     public Text promptText;
     public ShopPanel POTDShop;
+    public TutorialSequencer tutorial;
 
     public GameObject srcButton;
 
@@ -28,7 +29,7 @@ public class PurchaseScript : MonoBehaviour
         Zone theZ = theData.allZones[i];
         purchaseCost = theZ.unlockCost;
         canAfford();
-        promptText.text = "Purchase the " + theZ.zoneName + " zone for " + purchaseCost + " BaitBux?";
+        promptText.text = "Purchase the " + theZ.zoneName + " zone for " + purchaseCost + " BaitCoin?";
     }
 
     public void zonePurchase(){
@@ -41,7 +42,7 @@ public class PurchaseScript : MonoBehaviour
         zoneIndex = theData.currZone.index;
         Zone theZ = theData.currZone;
         purchaseCost = theZ.hintCost;
-        promptText.text = "Purchase " + theZ.zoneName + "'s hint for " + purchaseCost + " BaitBux?";
+        promptText.text = "Purchase " + theZ.zoneName + "'s hint for " + purchaseCost + " BaitCoin?";
         canAfford();
     }
 
@@ -57,18 +58,21 @@ public class PurchaseScript : MonoBehaviour
             case 0:
                 purchaseCost = 10;
                 break;
+            case 1: 
+                purchaseCost = 40;
+                break;
         }
         canAfford();
         if (poleMan.fullInv()){
             confirmButton.interactable = false;
         }
-        promptText.text = "Purchase a new fishing pole for " + purchaseCost + " BaitBux?";
+        promptText.text = "Purchase a new fishing pole for " + purchaseCost + " BaitCoin?";
     }
 
     public void poleOTDPrompt(){
         currType = purchaseType.poleOTD;
-        purchaseCost = POTDShop.cost;
-        promptText.text = "Purchase Daily Pole for " + purchaseCost + " BaitBux?";
+        purchaseCost = POTDShop.getCost();
+        promptText.text = "Purchase Daily Pole for " + purchaseCost + " BaitCoin?";
         canAfford();
     }
 
@@ -78,6 +82,7 @@ public class PurchaseScript : MonoBehaviour
     }
 
     public void polePurchase(){
+        tutorial.checkStep(3);
         theData.buyPole(purchaseCost, zoneIndex);
     }
 

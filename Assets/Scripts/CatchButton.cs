@@ -11,6 +11,7 @@ public class CatchButton : MonoBehaviour
     public PoleManager poleMan;
 
     public GameObject rewardPanel;
+    public TutorialSequencer tutorial;
 
     public void fail(){
         success = false;
@@ -21,18 +22,36 @@ public class CatchButton : MonoBehaviour
         Zone z = player.currZone;
         fishingStatus fs = fishMan.currFishing.activeInZone(z);
         FishingPole fp = poleMan.getPoleByID(fs.poleID);
+        poleMan.stopUsing(fs.poleID);
         if (success){
-            poleMan.weaken(z.durCost, fp);
+            bool broke = poleMan.weaken(z.durCost, fp);
             fishRarity r = z.catchFish(player.canSpecial(), fp, fs);
-            fishSize s = (fishSize) Random.Range(0,4);
+            fishSize s;
+            int sizeChance = Random.Range(1,11);
+            if (sizeChance == 10){
+                s = fishSize.extraLarge;
+            } else if (sizeChance >= 8){
+                s = fishSize.large;
+            } else if (sizeChance >= 4){
+                s = fishSize.medium;
+            } else {
+                s = fishSize.small;
+            }
             int p = player.getFish(r, s);
             FishObj f = z.rarityCatch(r);
-            rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, z.durCost);
+            if (fp.id == 0){
+                rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, 0);
+            } else if (broke){
+                rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, -1);
+            } else {
+                rewardPanel.GetComponent<RewardPanel>().fillOut(f, s, p, z.durCost);
+            }
+            
             rewardPanel.SetActive(true);
         } else {
+            tutorial.checkStep(1);
             success = true;
             fishMan.fishingButton.interactable = true;
         }
-        poleMan.stopUsing(fs.poleID);
     }
 }

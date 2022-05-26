@@ -10,35 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3621ee57c29fd498197948b933caf817, type: 3}
-  m_Name: TestZone2
+  m_Name: ZoneD
   m_EditorClassIdentifier: 
-  zoneName: TestZone2
-  index: 1
-  Description: We are here for more testing
-  unlockCost: 20
-  hintCost: 20
+  zoneName: ZoneD
+  index: 3
+  Description: Final Alpha Zone
+  unlockCost: 120
+  hintCost: 0
   durCost: 2
-  hint: 
-  fullHint: 
+  hint: Not Yet Implemented
+  fullHint: Not Yet Implemented
   background: {fileID: 21300000, guid: eae65ad3b03a44f349a953f4f34511c0, type: 3}
   banner: {fileID: 0}
   baseMinTime:
-    hours: 0
-    minutes: 25
+    hours: 5
+    minutes: 0
     seconds: 0
   baseMaxTime:
-    hours: 0
-    minutes: 60
+    hours: 10
+    minutes: 0
     seconds: 0
   minScalar:
     hours: 0
-    minutes: 1
+    minutes: 12
     seconds: 0
   maxScalar:
     hours: 0
-    minutes: 2
+    minutes: 15
     seconds: 0
-  commonFish: {fileID: 11400000, guid: aead817e0c9134fc8936793e91066b5e, type: 2}
-  uncommonFish: {fileID: 11400000, guid: 24da930a9850c46dcbf58c68710ff9a4, type: 2}
-  rareFish: {fileID: 11400000, guid: 83f8f5aa490a14bdfac6bcf8d08805cc, type: 2}
-  specialFish: {fileID: 11400000, guid: 237d0bc479e274c78999ddb9874f75d8, type: 2}
+  commonFish: {fileID: 11400000, guid: 438df9552d4244cfbafdee9520801459, type: 2}
+  uncommonFish: {fileID: 11400000, guid: 24fbdaf5a4b9d45658123c4c9a0bd04e, type: 2}
+  rareFish: {fileID: 11400000, guid: b463cc4a3214f4c21aadffb5b5ea6dd1, type: 2}
+  specialFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}

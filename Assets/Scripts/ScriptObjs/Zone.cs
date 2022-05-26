@@ -46,7 +46,7 @@ public class Zone : ScriptableObject
     }
 
     public TimeSpan maxTime(int bait){
-        return baseMaxTime.deserialize() - (multiplyTime(minScalar.deserialize(), bait));
+        return baseMaxTime.deserialize() - (multiplyTime(maxScalar.deserialize(), bait));
     }
 
     public serialTimeSpan serialMaxTime(int bait){
@@ -74,7 +74,7 @@ public class Zone : ScriptableObject
         if ( canSpecial && specialCondition(status, fp) ){
             return fishRarity.special;
         } else {
-            int myRand = Random.Range(0, 10001);
+            int myRand = Random.Range(0, 1001);
             if (myRand > (950 - (10 * luck))){
                 return fishRarity.rare;
             } else if (myRand > (800 - (15 * luck) ) ){

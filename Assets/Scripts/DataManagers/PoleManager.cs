@@ -35,10 +35,10 @@ public class PoleManager : MonoBehaviour
     void Start()
     {
         if (myPoles.myPolesLen > 0){
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(true);
             PDL.buttonsActive(true);
         } else {
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(false);
             PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
@@ -82,26 +82,27 @@ public class PoleManager : MonoBehaviour
         catchMan.updatePole(result, myPoles.inUseQ());
     }
 
-    public void weakenByID(int dur, int poleID){
+    public bool weakenByID(int dur, int poleID){
         FishingPole myPole = this.getPoleByID(poleID);
-        this.weaken(dur, myPole);
+        return this.weaken(dur, myPole);
     }
 
-    public void weaken(int dur, FishingPole p){
+    public bool weaken(int dur, FishingPole p){
         int pIndex = myPoles.find(p);
-        myPoles.weaken(dur, pIndex);
+        bool result = myPoles.weaken(dur, pIndex);
         save();
         if (myPoles.myPolesLen == 0){
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(false);
             PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
+        return result;
     }
 
     public void addRandomPole(){
         myPoles.addRandomPole();
         save();
-        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(true);
         PDL.buttonsActive(true);
         this.updatePoleDisplay();
     }
@@ -109,7 +110,7 @@ public class PoleManager : MonoBehaviour
     public void addLevelPole(int i){
         myPoles.addBudgetPole(i);
         save();
-        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(true);
         PDL.buttonsActive(true);
         this.updatePoleDisplay();
     }
@@ -117,7 +118,7 @@ public class PoleManager : MonoBehaviour
     public void addExactPole(int h, int b, int r, int c, int d){
         myPoles.addExactPole(h, b, r, c, d);
         save();
-        poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+        poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(true);
         PDL.buttonsActive(true);
         this.updatePoleDisplay();
     }
@@ -132,7 +133,7 @@ public class PoleManager : MonoBehaviour
         myPoles.removeRandomPole();
         save();
         if (myPoles.myPolesLen == 0){
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(false);
             PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
@@ -142,7 +143,7 @@ public class PoleManager : MonoBehaviour
         myPoles.removeCurrentPole();
         save();
         if (myPoles.myPolesLen == 0){
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(false);
             PDL.buttonsActive(false);
         }
         this.updatePoleDisplay();
@@ -160,7 +161,7 @@ public class PoleManager : MonoBehaviour
             poleDisplay.transform.Find("NameBG").Find("NameText").GetComponent<Text>().text = p.name;
             poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
         } else {
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(false);
         }
     }
 
@@ -191,13 +192,13 @@ public class PoleManager : MonoBehaviour
         poleDisplay.transform.Find("ReelColor").Find("ReelText").GetComponent<Text>().text = p.reel + "";
         poleDisplay.transform.Find("NameBG").Find("NameText").GetComponent<Text>().text = p.name;
         poleDisplay.transform.Find("InUse").gameObject.SetActive(myPoles.inUseQ());
-        poleDisplay.transform.Find("Buttons").gameObject.SetActive(false);
+        poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(false);
     }
 
     public void unlockPole(){
         lockedPole = -2;
         if (myPoles.myPolesLen > 0){
-            poleDisplay.transform.Find("Buttons").gameObject.SetActive(true);
+            poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(true);
         }
         this.updatePoleDisplay();
     }
@@ -221,7 +222,7 @@ public class playerPoleSave {
     public int myPolesLen;
     public FishingPole basePole = new FishingPole(0);
     public int currSelectPole = -1;
-    public int polesBought = 0;
+    public int polesBought = 1;
 
     public playerPoleSave(){
         int i = 0;
@@ -229,6 +230,12 @@ public class playerPoleSave {
             inUse[i] = false;
             i += 1;
         }
+        FishingPole tutorialPole = new FishingPole(1, 15, 20, 0, 5, 0);
+        myPoles.Add(tutorialPole);
+        currSelectPole = 0;
+        myPolesLen = 1;
+        weaken(4, 0);
+        setNameIcon("Todd's Pole", 0);
     }
 
     public FishingPole getPole(){
@@ -285,15 +292,17 @@ public class playerPoleSave {
         return getPole();
     }
 
-    public void weaken(int durLoss, int pole = -8){
+    public bool weaken(int durLoss, int pole = -8){
         if (pole == -8){
             pole = currSelectPole;
         }
         if (pole != -1){
             if (myPoles[pole].weaken(durLoss)){
                 this.remove(pole);
+                return true;
             }
         }
+        return false;
     }
 
     public void remove(int toRemove){
@@ -436,13 +445,24 @@ public class FishingPole {
             levelA();
             currDur = durability;
             spriteID = Random.Range(0,6);
+        } else if (Budget == 1){
+            durability = 5;
+            levelB();
+            currDur = durability;
+            spriteID = Random.Range(0,6);
         }
         // TO IMPLEMENT
     }
 
     public void levelA(){
-        rollStats(0,1,4,10,true,false);
-        rollStats(2,4,1,4,false,true);
+        rollStats(1,1,3,7,true,false);
+        rollStats(2,4,1,4,false,false);
+        clampStats();
+    }
+
+    public void levelB(){
+        rollStats(2,2,5,10,true,true);
+        rollStats(2,4,2,4,false,false);
         clampStats();
     }
 
@@ -527,7 +547,6 @@ public class FishingPole {
         charm = c;
         durability = 5 + d;
         currDur = durability;
-        spriteID = Random.Range(0,6);
     }
 
     public void setNameIcon(string n, int i){

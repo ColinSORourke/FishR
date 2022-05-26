@@ -11,6 +11,7 @@ public class ResetBoy : MonoBehaviour
         this.transform.GetComponent<PlayerData>().eraseData();
         this.transform.GetComponent<FishingManager>().eraseData();
         this.transform.GetComponent<PoleManager>().eraseData();
+        this.transform.GetComponent<TutorialSequencer>().eraseData();
         shop.eraseData();
 
 

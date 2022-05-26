@@ -38,7 +38,7 @@ public class RewardPanel : MonoBehaviour
         catchText += theFish.fishName;
         catchText += "!";
         rewardParent.transform.Find("FishText").GetComponent<Text>().text = catchText;
-        rewardParent.transform.Find("PayText").GetComponent<Text>().text = "That's worth " + payout + " BaitBux!";
+        rewardParent.transform.Find("PayText").GetComponent<Text>().text = "That's worth " + payout + " BaitCoin!";
         if (durability > 0){
             rewardParent.transform.Find("FishingPole").GetComponent<Text>().text = "Your fishing pole lost " + durability + " durability.";
         } else if (durability == 0){

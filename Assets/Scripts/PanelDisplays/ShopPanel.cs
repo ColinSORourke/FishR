@@ -11,13 +11,10 @@ public class ShopPanel : MonoBehaviour
     public PoleOfTheDay currPOTD;
     public PoleManager poleMan;
     public Transform POTDPanel;
-
-    public int cost;
     int daysInFuture = 0;
     // Start is called before the first frame update
     void Start()
     {   
-        cost = 20;
         if (System.IO.File.Exists(Application.persistentDataPath + "/POTD.json"))
         {
             StreamReader reader = new StreamReader(Application.persistentDataPath + "/POTD.json"); 
@@ -43,6 +40,10 @@ public class ShopPanel : MonoBehaviour
         updateDisplay();
     }
 
+    public int getCost(){
+        return currPOTD.cost;
+    }
+
     public void updateDisplay(){
         int h = currPOTD.poleStats[0];
         int b = currPOTD.poleStats[1];
@@ -58,7 +59,7 @@ public class ShopPanel : MonoBehaviour
         if (currPOTD.purchased){
             POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = "Purchased!";
         } else {
-            POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = cost + " Baitbux";
+            POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = currPOTD.cost + " BaitCoin";
         }
     }   
 
@@ -92,6 +93,9 @@ public class PoleOfTheDay {
     public int[] poleStats = new int[] {0, 0, 0, 0, 0};
     public serialDateTime previousDay;
     public bool purchased;
+    public int cost{
+        get => 5 + Mathf.FloorToInt( (poleStats[0] + poleStats[1] + poleStats[2] + poleStats[3] + poleStats[4]) * 1.5f);
+    }
 
     public PoleOfTheDay(){
         previousDay = new serialDateTime(DateTime.Now, true);
