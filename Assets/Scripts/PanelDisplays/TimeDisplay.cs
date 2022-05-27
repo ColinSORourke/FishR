@@ -27,22 +27,20 @@ public class TimeDisplay : MonoBehaviour
         TimeSpan minTime = fs.minTime.deserialize();
         TimeSpan minRemain = minTime - diffTime;
         TimeSpan maxRemain = maxTime - diffTime;
-        int roundMax = minRemain.Seconds != 0 ? 1 : 0;
-        int roundMin = maxRemain.Seconds != 0 ? 1 : 0;
 
         string minString;
-        string maxString = maxRemain.Hours + ":" + (maxRemain.Minutes + roundMax).ToString("00") + " hours";
+        string maxString = maxRemain.Hours + ":" + (maxRemain.Minutes).ToString("00") + " hours";
         if (minTime <= diffTime){
             minString = "next ";
             if (maxRemain.Hours == 0){
-                maxString = (maxRemain.Minutes + roundMax) + " minutes";
+                maxString = (maxRemain.Minutes) + " minutes";
             }
         } else if (minRemain.Hours == 0 && maxRemain.Hours == 0){
-            minString = (minRemain.Minutes + roundMin) + " to ";
-            maxString = (maxRemain.Minutes + roundMax) + " minutes";
+            minString = (minRemain.Minutes) + " to ";
+            maxString = (maxRemain.Minutes) + " minutes";
         } 
         else {
-            minString = minRemain.Hours + ":" + (minRemain.Minutes + roundMin).ToString("00");
+            minString = minRemain.Hours + ":" + (minRemain.Minutes).ToString("00");
         }
         
         this.GetComponent<Text>().text = "Bite in " + minString + maxString + " from now";

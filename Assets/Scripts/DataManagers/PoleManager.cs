@@ -177,8 +177,14 @@ public class PoleManager : MonoBehaviour
 
     public void stopUsing(int poleID){
         Debug.Log("No Longer using pole ID: " + poleID);
-        int ind = myPoles.findByID(poleID);
-        myPoles.stopUsing(ind);
+        if (poleID == 0){
+            myPoles.stopUsing(-1);
+        } else {
+            int ind = myPoles.findByID(poleID);
+            if (ind != -1){
+                myPoles.stopUsing(ind);
+            }
+        }
         save();
         this.updatePoleDisplay();
     }
@@ -266,7 +272,7 @@ public class playerPoleSave {
 
     public void stopUsing(int ind){
         Debug.Log("No Longer using pole index: " + ind);
-        if (ind < 6){
+        if (ind < 5){
             inUse[ind + 1] = false;
         } 
     }
@@ -307,6 +313,12 @@ public class playerPoleSave {
 
     public void remove(int toRemove){
         myPoles.RemoveAt(toRemove);
+        int ind = toRemove + 1;
+        while (ind < 5){
+            inUse[ind] = inUse[ind + 1];
+            ind += 1;
+        }
+        inUse[ind] = false;
         myPolesLen -= 1;
         currSelectPole = -1;
     }

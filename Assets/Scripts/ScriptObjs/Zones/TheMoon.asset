@@ -29,14 +29,14 @@ MonoBehaviour:
   baseMaxTime:
     hours: 0
     minutes: 60
-    seconds: 0
+    seconds: 30
   minScalar:
     hours: 0
-    minutes: 1
+    minutes: 0
     seconds: 0
   maxScalar:
     hours: 0
-    minutes: 2
+    minutes: 0
     seconds: 0
   commonFish: {fileID: 11400000, guid: aead817e0c9134fc8936793e91066b5e, type: 2}
   uncommonFish: {fileID: 11400000, guid: 24da930a9850c46dcbf58c68710ff9a4, type: 2}
