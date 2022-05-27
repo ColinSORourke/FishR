@@ -230,7 +230,7 @@ public class playerPoleSave {
             inUse[i] = false;
             i += 1;
         }
-        FishingPole tutorialPole = new FishingPole(1, 15, 20, 0, 5, 0);
+        FishingPole tutorialPole = new FishingPole(1, 20, 15, 0, 5, 0);
         myPoles.Add(tutorialPole);
         currSelectPole = 0;
         myPolesLen = 1;
