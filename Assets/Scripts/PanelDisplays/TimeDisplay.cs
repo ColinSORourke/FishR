@@ -30,7 +30,7 @@ public class TimeDisplay : MonoBehaviour
 
         string minString;
         string maxString = maxRemain.Hours + ":" + (maxRemain.Minutes).ToString("00") + " hours";
-        if (minTime <= diffTime){
+        if (minRemain.Minutes < 1){
             minString = "next ";
             if (maxRemain.Hours == 0){
                 maxString = (maxRemain.Minutes) + " minutes";
