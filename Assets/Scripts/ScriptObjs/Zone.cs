@@ -148,6 +148,7 @@ public class serialDateTime{
     }
 
     public int toSeed(){
+        int uniqueYear = (year * 32) % 10000;
         int result = year + (month * 100) + day;
         return result;
     }
