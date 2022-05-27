@@ -35,12 +35,19 @@ public class TimeDisplay : MonoBehaviour
             if (maxRemain.Hours == 0){
                 maxString = (maxRemain.Minutes) + " minutes";
             }
-        } else if (minRemain.Hours == 0 && maxRemain.Hours == 0){
+            if (maxRemain.Hours == 1 && maxRemain.Minutes == 0){
+                maxString = " 60 minutes";
+            }
+        } else if (minRemain.Hours == 0 && ( ( maxRemain.Hours == 0 ) || (maxRemain.Hours == 1 && maxRemain.Minutes ==0 ) )){
             minString = (minRemain.Minutes) + " to ";
-            maxString = (maxRemain.Minutes) + " minutes";
+            if (maxRemain.Hours == 0){
+                maxString = (maxRemain.Minutes) + " minutes";
+            } else {
+                maxString = "60 minutes";
+            }
         } 
         else {
-            minString = minRemain.Hours + ":" + (minRemain.Minutes).ToString("00");
+            minString = minRemain.Hours + ":" + (minRemain.Minutes).ToString("00") + " to ";
         }
         
         this.GetComponent<Text>().text = "Bite in " + minString + maxString + " from now";
