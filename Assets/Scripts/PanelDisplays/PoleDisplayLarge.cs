@@ -57,7 +57,7 @@ public class PoleDisplayLarge : MonoBehaviour
         Hook.gameObject.SetActive(a);
         Reel.gameObject.SetActive(a);
         Charm.gameObject.SetActive(a);
-        Item.SetActive(a);
+        //Item.SetActive(a);
         DestroyButton.SetActive(a);
     }
 
