@@ -63,5 +63,6 @@ public class PoleDisplayLarge : MonoBehaviour
 
     public void inUse(bool a){
         inUseIcon.SetActive(a);
+        DestroyButton.GetComponent<Button>().interactable = !a;
     }
 }

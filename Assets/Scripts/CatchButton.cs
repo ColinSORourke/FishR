@@ -22,7 +22,6 @@ public class CatchButton : MonoBehaviour
         Zone z = player.currZone;
         fishingStatus fs = fishMan.currFishing.activeInZone(z);
         FishingPole fp = poleMan.getPoleByID(fs.poleID);
-        poleMan.stopUsing(fs.poleID);
         if (success){
             bool broke = poleMan.weaken(z.durCost, fp);
             fishRarity r = z.catchFish(player.canSpecial(), fp, fs);

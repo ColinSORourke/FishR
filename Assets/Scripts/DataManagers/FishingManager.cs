@@ -31,13 +31,12 @@ public class FishingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.buttonUpdate();
-
         InvokeRepeating("halfMinuteTick", 0.0f, 30.0f);
     }
 
     void OnApplicationPause(bool paused){
         if (!paused){
+            this.buttonUpdate();
             halfMinuteTick();
         }
     }
@@ -59,10 +58,8 @@ public class FishingManager : MonoBehaviour
                 }
 
                 if (DateTime.Now > fs.getAwayTime()){
-                    currFishing.stopFishing(z);
                     catchPanel.transform.GetChild(0).GetComponent<CatchButton>().fail();
                     catchPanel.transform.GetChild(1).GetComponent<Text>().text = "Awwwww, you missed the fish. Better luck next time.";
-                    timeText.displayFutureTime(z, fp.hook, fp.bait);
                 } else {
                     TimeSpan remainingTime = (fs.getAwayTime() - DateTime.Now);
                     int roundMin = remainingTime.Seconds != 0 ? 1 : 0;
@@ -99,6 +96,7 @@ public class FishingManager : MonoBehaviour
         notifs.unscheduleMiss(fs.missID);
         timeText.displayFutureTime(z, fp.hook, fp.bait);
         fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Tap to Fish!";
+        this.GetComponent<PoleManager>().stopUsing(fs.poleID);
         this.GetComponent<PoleManager>().unlockPole();
     }
 
@@ -123,8 +121,8 @@ public class FishingManager : MonoBehaviour
     }
 
     public void buttonUpdateVars(Zone z, FishingPole fp, bool inUse){
-        timeText.displayFutureTime(z, fp.hook, fp.bait);
         if (currFishing.activeInZone(z) == null){
+            timeText.displayFutureTime(z, fp.hook, fp.bait);
             this.GetComponent<PoleManager>().unlockPole();
             if (currFishing.canFish()){
                 fishingButton.interactable = !inUse;
@@ -189,8 +187,8 @@ public class fishingStatuses{
             fs.startTime = new serialDateTime(DateTime.Now);
             fs.biteTime = new serialDateTime(DateTime.Now + timeTillBite);
             fs.biteDuration = new serialTimeSpan(0, 20 + (fp.reel * 4), 0);
-            fs.minTime = z.serialMinTime(fp.hook);
-            fs.maxTime = z.serialMaxTime(fp.bait);
+            fs.minTime = z.serialMinTime(fp.bait);
+            fs.maxTime = z.serialMaxTime(fp.hook);
 
             int i = 0;
             while (i < 3){

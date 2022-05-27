@@ -37,20 +37,20 @@ public class Zone : ScriptableObject
         return false;
     }
 
-    public TimeSpan minTime(int hook){
-        return baseMinTime.deserialize() - (multiplyTime(minScalar.deserialize(), hook));
+    public TimeSpan minTime(int bait){
+        return baseMinTime.deserialize() - (multiplyTime(minScalar.deserialize(), bait));
     }
 
-    public serialTimeSpan serialMinTime(int hook){
-        return new serialTimeSpan(minTime(hook));
+    public serialTimeSpan serialMinTime(int bait){
+        return new serialTimeSpan(minTime(bait));
     }
 
-    public TimeSpan maxTime(int bait){
-        return baseMaxTime.deserialize() - (multiplyTime(maxScalar.deserialize(), bait));
+    public TimeSpan maxTime(int hook){
+        return baseMaxTime.deserialize() - (multiplyTime(maxScalar.deserialize(), hook));
     }
 
-    public serialTimeSpan serialMaxTime(int bait){
-        return new serialTimeSpan(maxTime(bait));
+    public serialTimeSpan serialMaxTime(int hook){
+        return new serialTimeSpan(maxTime(hook));
     }
     
     public TimeSpan multiplyTime(TimeSpan original, int scalar){
@@ -59,8 +59,8 @@ public class Zone : ScriptableObject
 
     public TimeSpan randomDuration(int hook, int bait){
         
-        var minimum = minTime(hook);
-        var maximum = maxTime(bait);
+        var minimum = minTime(bait);
+        var maximum = maxTime(hook);
         var minMinutes = minimum.Hours * 60 + minimum.Minutes;
         var maxMinutes = maximum.Hours * 60 + maximum.Minutes;
         var randMinutes = Random.Range(minMinutes, maxMinutes);

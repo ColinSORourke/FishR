@@ -20,7 +20,7 @@ MonoBehaviour:
   durCost: 2
   hint: Not Yet Implemented
   fullHint: Not Yet Implemented
-  background: {fileID: 21300000, guid: eae65ad3b03a44f349a953f4f34511c0, type: 3}
+  background: {fileID: 21300000, guid: 3d98e626797a54b51a47218b620ba757, type: 3}
   banner: {fileID: 0}
   baseMinTime:
     hours: 5

@@ -11,70 +11,76 @@ public class FishPanel : MonoBehaviour
     zoneData fullZone;
     FishObj myFish;
     fishData myFishData = new fishData();
-    bool specialCaught = false;
 
     void OnEnable()
     {
         fullZone = playerData.myData.allZoneData[playerData.currZone.index];
         myFish = playerData.currZone.commonFish;
 
+
+        bool caught = false;
         switch (myRarity){
             case fishRarity.common:
                 myFish = playerData.currZone.commonFish;
                 myFishData = fullZone.commonData;
+                caught = myFishData.caught;
                 break;
             case fishRarity.uncommon:
                 myFish = playerData.currZone.uncommonFish;
                 myFishData = fullZone.uncommonData;
+                caught = myFishData.caught;
                 break;
             case fishRarity.rare:
                 myFish = playerData.currZone.rareFish;
                 myFishData = fullZone.rareData;
+                caught = myFishData.caught;
                 break;
             case fishRarity.special:
                 myFish = playerData.currZone.specialFish;
-                specialCaught = fullZone.specialCaught;
+                caught = fullZone.specialCaught;
                 break;
         }
 
         var flavorText = this.transform.Find("FlavorText");
-        if (specialCaught || myFishData.caught){
-            this.transform.Find("FishName").GetComponent<Text>().text = myFish.fishName;
+        if (caught){
+            this.transform.Find("FishFrame/Panel/FishName").GetComponent<Text>().text = myFish.fishName;
             flavorText.GetComponent<Text>().text = myFish.description;
         } else {
-            this.transform.Find("FishName").GetComponent<Text>().text = "Unknown";
+            this.transform.Find("FishFrame/Panel/FishName").GetComponent<Text>().text = "Unknown";
             flavorText.GetComponent<Text>().text = "???\n???\n???";
         }
         
 
         
-        if (!specialCaught && !myFishData.caught){
-            this.transform.Find("FishSprite").GetComponent<Image>().sprite = mysteryFish;
+        if (!caught){
+            this.transform.Find("FishFrame/FishSprite").GetComponent<Image>().sprite = mysteryFish;
         } else {
-            this.transform.Find("FishSprite").GetComponent<Image>().sprite = myFish.icon;
+            this.transform.Find("FishFrame/FishSprite").GetComponent<Image>().sprite = myFish.icon;
         }
 
         var caughtText = this.transform.Find("CaughtText");
-        if (specialCaught){
-            caughtText.GetComponent<Text>().text = "Caught!";
-        } else if (myFishData.caught){
-            string caughtInfo = "";
-            switch (myFishData.bestSize){
-                case fishSize.small: 
-                    caughtInfo += "Small";
-                    break;
-                case fishSize.medium: 
-                    caughtInfo += "Medium";
-                    break;
-                case fishSize.large: 
-                    caughtInfo += "Large";
-                    break;
-                case fishSize.extraLarge: 
-                    caughtInfo += "XL";
-                    break;
+        if (caught){
+            if (myRarity == fishRarity.special){
+                caughtText.GetComponent<Text>().text = "Caught!";
+            } else {
+                string caughtInfo = "";
+                switch (myFishData.bestSize){
+                    case fishSize.small: 
+                        caughtInfo += "Small";
+                        break;
+                    case fishSize.medium: 
+                        caughtInfo += "Medium";
+                        break;
+                    case fishSize.large: 
+                        caughtInfo += "Large";
+                        break;
+                    case fishSize.extraLarge: 
+                        caughtInfo += "XL";
+                        break;
+                }
+                caughtInfo += " | " + myFishData.numCaught;
+                caughtText.GetComponent<Text>().text = caughtInfo;
             }
-            caughtInfo += " | " + myFishData.numCaught;
-            caughtText.GetComponent<Text>().text = caughtInfo;
         } else {
             caughtText.GetComponent<Text>().text = "Not Caught Yet";
         }

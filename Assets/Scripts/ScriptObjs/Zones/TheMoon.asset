@@ -16,7 +16,7 @@ MonoBehaviour:
   index: 0
   Description: We are here for more testing
   unlockCost: 0
-  hintCost: 20
+  hintCost: 0
   durCost: 1
   hint: Not yet implemented
   fullHint: Not yet implemented
