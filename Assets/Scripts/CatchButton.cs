@@ -29,7 +29,7 @@ public class CatchButton : MonoBehaviour
             int sizeChance = Random.Range(1,11);
             if (sizeChance == 10){
                 s = fishSize.extraLarge;
-            } else if (sizeChance >= 8){
+            } else if (sizeChance >= 7){
                 s = fishSize.large;
             } else if (sizeChance >= 4){
                 s = fishSize.medium;
