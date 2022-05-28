@@ -163,6 +163,9 @@ public class playerSaveData{
             case fishRarity.common:
                 collectionScore += 1;
                 break;
+            case fishRarity.commonAlt:
+                collectionScore += 1;
+                break;
             case fishRarity.uncommon:
                 collectionScore += 2;
                 break;
@@ -170,7 +173,7 @@ public class playerSaveData{
                 collectionScore += 3;
                 break;
             case fishRarity.special:
-                collectionScore += 4;
+                collectionScore += 3;
                 break;
         }
     }
@@ -182,6 +185,7 @@ public class zoneData{
     public bool unlockedHint;
     public int zoneScore;
     public fishData commonData;
+    public fishData commonAltData;
     public fishData uncommonData;
     public fishData rareData;
     public bool specialCaught;
@@ -190,6 +194,7 @@ public class zoneData{
         unlocked = false;
         unlockedHint = false;
         commonData = new fishData();
+        commonAltData = new fishData();
         uncommonData = new fishData();
         rareData = new fishData();
         specialCaught = false;
@@ -208,6 +213,17 @@ public class zoneData{
                 commonData.numCaught += 1;
                 if (s > commonData.bestSize){
                     commonData.bestSize = s;
+                }
+                break;
+            case fishRarity.commonAlt:
+                if (!commonAltData.caught){
+                    commonAltData.caught = true;
+                    firstCatch = true;
+                    zoneScore += 1;
+                }
+                commonAltData.numCaught += 1;
+                if (s > commonAltData.bestSize){
+                    commonAltData.bestSize = s;
                 }
                 break;
             case fishRarity.uncommon:

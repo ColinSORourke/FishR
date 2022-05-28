@@ -25,6 +25,11 @@ public class FishPanel : MonoBehaviour
                 myFishData = fullZone.commonData;
                 caught = myFishData.caught;
                 break;
+            case fishRarity.commonAlt:
+                myFish = playerData.currZone.commonAltFish;
+                myFishData = fullZone.commonAltData;
+                caught = myFishData.caught;
+                break;
             case fishRarity.uncommon:
                 myFish = playerData.currZone.uncommonFish;
                 myFishData = fullZone.uncommonData;
@@ -89,7 +94,8 @@ public class FishPanel : MonoBehaviour
 
 public enum fishRarity {
     common = 0,
-    uncommon = 1,
-    rare = 2, 
-    special = 3
+    commonAlt = 1,
+    uncommon = 2,
+    rare = 3, 
+    special = 4
 }

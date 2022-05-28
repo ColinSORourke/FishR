@@ -28,6 +28,7 @@ public class Zone : ScriptableObject
     public serialTimeSpan maxScalar;
 
     public FishObj commonFish;
+    public FishObj commonAltFish;
     public FishObj uncommonFish;
     public FishObj rareFish;
     public FishObj specialFish;
@@ -80,7 +81,12 @@ public class Zone : ScriptableObject
             } else if (myRand > (650 - (15 * luck) ) ){
                 return fishRarity.uncommon;
             } else {
-                return fishRarity.common;
+                if (myRand % 2 == 1){
+                    return fishRarity.common;
+                } else {
+                    return fishRarity.common;
+                    //return fishRarity.commonAlt;
+                } 
             }
         }
     }
@@ -89,6 +95,8 @@ public class Zone : ScriptableObject
         switch (r){
             case fishRarity.common:
                 return commonFish;
+            case fishRarity.commonAlt:
+                return commonAltFish;
             case fishRarity.uncommon:
                 return uncommonFish;
             case fishRarity.rare:
@@ -168,6 +176,5 @@ public class serialDateTime{
         } else {
             return new DateTime(year, month, day, 0, 0, 0);
         }
-        
     }
 }
