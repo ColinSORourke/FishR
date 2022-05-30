@@ -26,7 +26,7 @@ public class RewardPanel : MonoBehaviour
                 catchText += " small ";
                 break;
             case fishSize.medium:
-                catchText += " regular ";
+                catchText += " medium ";
                 break;
             case fishSize.large:
                 catchText += " large ";
