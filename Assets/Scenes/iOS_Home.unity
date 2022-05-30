@@ -7703,7 +7703,7 @@ MonoBehaviour:
   poleButtonsA: {fileID: 588316355}
   poleButtonsB: {fileID: 607378811}
   tutorialText: {fileID: 144737438}
-  ignore: 1
+  ignore: 0
   steps:
   - {fileID: 11400000, guid: b94b2699b31e54520bdb50e5be96d4c9, type: 2}
   - {fileID: 11400000, guid: 4de794a8d6c2d4a069084f7bc366d8fa, type: 2}
@@ -11983,7 +11983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1856481137
 RectTransform:
   m_ObjectHideFlags: 0
