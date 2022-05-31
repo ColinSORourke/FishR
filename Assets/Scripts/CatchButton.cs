@@ -50,6 +50,7 @@ public class CatchButton : MonoBehaviour
         } else {
             tutorial.checkStep(1);
             success = true;
+            this.transform.GetChild(0).GetComponent<Text>().text = "Catch!";
             fishMan.fishingButton.interactable = true;
         }
     }
