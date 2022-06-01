@@ -48,10 +48,10 @@ public class FishPanel : MonoBehaviour
 
         var flavorText = this.transform.Find("FlavorText");
         if (caught){
-            this.transform.Find("FishFrame/Panel/FishName").GetComponent<Text>().text = myFish.fishName;
+            this.transform.Find("Panel/FishName").GetComponent<Text>().text = myFish.fishName;
             flavorText.GetComponent<Text>().text = myFish.description;
         } else {
-            this.transform.Find("FishFrame/Panel/FishName").GetComponent<Text>().text = "Unknown";
+            this.transform.Find("Panel/FishName").GetComponent<Text>().text = "Unknown";
             flavorText.GetComponent<Text>().text = "???\n???\n???";
         }
         
