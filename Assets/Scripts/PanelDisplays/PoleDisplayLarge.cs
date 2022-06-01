@@ -35,13 +35,13 @@ public class PoleDisplayLarge : MonoBehaviour
             Durability.transform.GetChild(1).GetComponent<Text>().text = "Durability: " + fp.currDur + "/" + fp.durability;
 
             Bait.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.bait / 10.0f;
-            Bait.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.bait + " Bait";
+            Bait.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = fp.bait + "";
             Hook.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.hook / 10.0f;
-            Hook.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.hook + " Hook";
+            Hook.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = fp.hook + "";
             Reel.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.reel / 10.0f;
-            Reel.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.reel + " Reel";
+            Reel.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = fp.reel + "";
             Charm.GetChild(0).gameObject.GetComponent<Image>().fillAmount = fp.charm / 10.0f;
-            Charm.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = fp.charm + " Charm";
+            Charm.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = fp.charm + "";
 
             // Parse Item HERE
         } else {
