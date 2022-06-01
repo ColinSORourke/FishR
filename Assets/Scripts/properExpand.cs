@@ -7,13 +7,9 @@ public class properExpand : MonoBehaviour
 {
     public Scrollbar scrollbar;
     public float defaultAnchor;
-    public bool hasUpdated = false;
 
-    public void Update(){
-        if (!hasUpdated){
-            correctSize();
-            hasUpdated = true;
-        }
+    public void Start(){
+        Invoke("correctSize", 0.05f);
     }
 
     public void correctSize(){
