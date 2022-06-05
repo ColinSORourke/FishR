@@ -20,6 +20,7 @@ public class Zone : ScriptableObject
 
     public Sprite background;
     public Sprite banner;
+    public Sprite title;
 
     public serialTimeSpan baseMinTime;
     public serialTimeSpan baseMaxTime;

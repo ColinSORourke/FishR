@@ -15,13 +15,13 @@ public class ZoneButton : MonoBehaviour
     void Start()
     {
         zoneData info = playerData.myData.allZoneData[myZone.index];
+        this.GetComponent<Image>().sprite = myZone.banner;
+        this.transform.GetChild(0).GetComponent<Image>().sprite = myZone.title;
         if (!info.unlocked){
             this.GetComponent<Image>().color = new Color32(100,100,100,200);
         } else {
             this.GetComponent<Image>().color = new Color32(255,255,255,255);
         }
-
-        this.transform.GetChild(0).GetComponent<Text>().text = myZone.zoneName;
     }
 
     public void onClick(){

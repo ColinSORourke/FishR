@@ -21,7 +21,8 @@ MonoBehaviour:
   hint: Not yet implemented
   fullHint: Not yet implemented
   background: {fileID: 21300000, guid: eae65ad3b03a44f349a953f4f34511c0, type: 3}
-  banner: {fileID: 0}
+  banner: {fileID: 21300000, guid: 5a46ffaceebea476ea97f8dec7cd3d57, type: 3}
+  title: {fileID: 21300000, guid: 029559a81de1a4dd7a726f56f0958da2, type: 3}
   baseMinTime:
     hours: 0
     minutes: 20
@@ -39,6 +40,7 @@ MonoBehaviour:
     minutes: 2
     seconds: 0
   commonFish: {fileID: 11400000, guid: aead817e0c9134fc8936793e91066b5e, type: 2}
+  commonAltFish: {fileID: 0}
   uncommonFish: {fileID: 11400000, guid: 24da930a9850c46dcbf58c68710ff9a4, type: 2}
   rareFish: {fileID: 11400000, guid: 83f8f5aa490a14bdfac6bcf8d08805cc, type: 2}
   specialFish: {fileID: 11400000, guid: 237d0bc479e274c78999ddb9874f75d8, type: 2}
