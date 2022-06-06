@@ -152,10 +152,11 @@ public class PoleManager : MonoBehaviour
     public void updatePoleDisplay(){
         FishingPole p = this.getPole();
         PDL.displayPole(p, getSprite(p.spriteID));
-        poleDisplay.GetComponent<Image>().sprite = getSprite(p.spriteID);
+        
         PDL.inUse(this.myPoles.inUseQ());
 
         if (lockedPole == -2){
+            poleDisplay.GetComponent<Image>().sprite = getSprite(p.spriteID);
             poleDisplay.transform.Find("LuckColor").Find("LuckText").GetComponent<Text>().text = p.charm + "";
             poleDisplay.transform.Find("ReelColor").Find("ReelText").GetComponent<Text>().text = p.reel + "";
             poleDisplay.transform.Find("NameBG").Find("NameText").GetComponent<Text>().text = p.name;
@@ -194,6 +195,7 @@ public class PoleManager : MonoBehaviour
         FishingPole p = myPoles.getPole(lockedPole);
 
         myPoles.currSelectPole = lockedPole;
+        poleDisplay.GetComponent<Image>().sprite = getSprite(p.spriteID);
         poleDisplay.transform.Find("LuckColor").Find("LuckText").GetComponent<Text>().text = p.charm + "";
         poleDisplay.transform.Find("ReelColor").Find("ReelText").GetComponent<Text>().text = p.reel + "";
         poleDisplay.transform.Find("NameBG").Find("NameText").GetComponent<Text>().text = p.name;

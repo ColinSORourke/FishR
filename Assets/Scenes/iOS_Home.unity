@@ -13852,7 +13852,7 @@ MonoBehaviour:
   poleMan: {fileID: 999648714}
   confirmButton: {fileID: 2014766940}
   promptText: {fileID: 1463157211}
-  POTDShop: {fileID: 0}
+  POTDShop: {fileID: 288369606}
   tutorial: {fileID: 999648716}
   srcButton: {fileID: 538938079}
 --- !u!222 &1856481139
