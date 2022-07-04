@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e252019f96374d70982680fef2dcffc, type: 3}
-  m_Name: MoonRockFish
+  m_Name: PoolEel
   m_EditorClassIdentifier: 
-  fishName: MoonRockFish
-  description: '[TEMP] Moon Rock'
-  icon: {fileID: 21300000, guid: 389dac5ce0c3041d4bb75a2652056ec3, type: 3}
-  basePay: 4
+  fishName: Pool Eel
+  description: Placeholder Description
+  icon: {fileID: 21300000, guid: 0f0a317a2c905492bbadab295450aa13, type: 3}
+  basePay: 0

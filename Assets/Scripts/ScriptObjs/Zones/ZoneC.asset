@@ -40,7 +40,7 @@ MonoBehaviour:
     minutes: 12
     seconds: 0
   commonFish: {fileID: 11400000, guid: beec84b1bb027424fa2a008a973d5fd1, type: 2}
-  commonAltFish: {fileID: 0}
+  commonAltFish: {fileID: 11400000, guid: beec84b1bb027424fa2a008a973d5fd1, type: 2}
   uncommonFish: {fileID: 11400000, guid: a2f78b63d75aa4f2aae9ef6a5937ce2d, type: 2}
   rareFish: {fileID: 11400000, guid: 7bf5dcbafa7d043e0acbed5d5eaf1a11, type: 2}
   specialFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}

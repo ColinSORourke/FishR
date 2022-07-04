@@ -15,4 +15,4 @@ MonoBehaviour:
   fishName: Basstronaut
   description: '[TEMP] Neil Finstrong'
   icon: {fileID: 21300000, guid: 74c8c284cc9b34735925704c8cf93d5a, type: 3}
-  basePay: 2
+  basePay: 4

@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3621ee57c29fd498197948b933caf817, type: 3}
-  m_Name: ZoneB
+  m_Name: Backyard
   m_EditorClassIdentifier: 
-  zoneName: ZoneB
-  index: 1
+  zoneName: Backyard
+  index: 0
   Description: We are here for testing
-  unlockCost: 15
+  unlockCost: 0
   hintCost: 0
   durCost: 1
   hint: Not Yet Implemented
   fullHint: Not Yet Implemented
-  background: {fileID: 21300000, guid: b55f6bdbe5c69401cbbe8f6092a3a33b, type: 3}
+  background: {fileID: 21300000, guid: 3849ba4357048473c99ed47ead56ae12, type: 3}
   banner: {fileID: 21300000, guid: 6ed590b45f6294019b9ffe7988d592e8, type: 3}
   title: {fileID: 21300000, guid: d250709639ba7424baafa192dfee8189, type: 3}
   baseMinTime:
-    hours: 1
-    minutes: 0
+    hours: 0
+    minutes: 20
     seconds: 0
   baseMaxTime:
-    hours: 3
-    minutes: 0
+    hours: 0
+    minutes: 60
     seconds: 30
   minScalar:
     hours: 0
-    minutes: 3
+    minutes: 1
     seconds: 0
   maxScalar:
     hours: 0
-    minutes: 6
+    minutes: 2
     seconds: 0
-  commonFish: {fileID: 11400000, guid: bcbeaf7a56175442b9422fc38b6f753d, type: 2}
-  commonAltFish: {fileID: 0}
-  uncommonFish: {fileID: 11400000, guid: 6d3a1ee48ae0b4a1194d6ba9e4347e4a, type: 2}
+  commonFish: {fileID: 11400000, guid: 6d3a1ee48ae0b4a1194d6ba9e4347e4a, type: 2}
+  commonAltFish: {fileID: 11400000, guid: bcbeaf7a56175442b9422fc38b6f753d, type: 2}
+  uncommonFish: {fileID: 11400000, guid: 6163c4ab41ff74a43952334d861e2f21, type: 2}
   rareFish: {fileID: 11400000, guid: eea895bbca9cf4d1a826d88c7bd961a2, type: 2}
-  specialFish: {fileID: 11400000, guid: c2fbf5393db0845938c560383fc6a854, type: 2}
+  specialFish: {fileID: 11400000, guid: f1843e14935d44c8696efe1e610e02ca, type: 2}

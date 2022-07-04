@@ -15,4 +15,4 @@ MonoBehaviour:
   fishName: Crabollo Lander
   description: '[TEMP] Crabollo Lander'
   icon: {fileID: 21300000, guid: 684d6969bbecf49bfac2d7d956a596d2, type: 3}
-  basePay: 4
+  basePay: 10

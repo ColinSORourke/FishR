@@ -59,7 +59,7 @@ public class ShopPanel : MonoBehaviour
         if (currPOTD.purchased){
             POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = "Purchased!";
         } else {
-            POTDPanel.GetChild(7).GetChild(0).GetComponent<Text>().text = currPOTD.cost + " BaitCoin";
+            POTDPanel.GetChild(8).GetChild(0).GetComponent<Text>().text = currPOTD.cost + "";
         }
     }   
 

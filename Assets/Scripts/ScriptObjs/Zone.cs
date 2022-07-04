@@ -85,8 +85,8 @@ public class Zone : ScriptableObject
                 if (myRand % 2 == 1){
                     return fishRarity.common;
                 } else {
-                    return fishRarity.common;
-                    //return fishRarity.commonAlt;
+                    //return fishRarity.common;
+                    return fishRarity.commonAlt;
                 } 
             }
         }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e252019f96374d70982680fef2dcffc, type: 3}
-  m_Name: FishB_Uncommon
+  m_Name: Pikesicle
   m_EditorClassIdentifier: 
-  fishName: Eel
+  fishName: Pikesicle
   description: Placeholder Description
-  icon: {fileID: 21300000, guid: ad9e839d32a6b4105a7945852556e38b, type: 3}
-  basePay: 6
+  icon: {fileID: 21300000, guid: d47fedac66d194924a721bf08d9d1495, type: 3}
+  basePay: 1
