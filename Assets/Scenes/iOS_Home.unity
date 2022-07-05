@@ -8913,7 +8913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1043028432844762046, guid: 13baea05b460b467a8b1a2b63cd54d8e, type: 3}
       propertyPath: myRarity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1043028432844762046, guid: 13baea05b460b467a8b1a2b63cd54d8e, type: 3}
       propertyPath: playerData
