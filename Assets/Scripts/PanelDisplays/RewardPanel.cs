@@ -37,14 +37,14 @@ public class RewardPanel : MonoBehaviour
         }
         catchText += theFish.fishName;
         catchText += "!";
-        rewardParent.transform.Find("FishText").GetComponent<Text>().text = catchText;
-        rewardParent.transform.Find("PayText").GetComponent<Text>().text = "That's worth " + payout + " BaitCoin!";
+        rewardParent.transform.Find("Panel").Find("FishText").GetComponent<Text>().text = catchText;
+        rewardParent.transform.Find("Panel").Find("PayText").GetComponent<Text>().text = "That's worth " + payout + " BaitCoin!";
         if (durability > 0){
-            rewardParent.transform.Find("FishingPole").GetComponent<Text>().text = "Your fishing pole lost " + durability + " durability.";
+            rewardParent.transform.Find("Panel").Find("FishingPole").GetComponent<Text>().text = "Your fishing pole lost " + durability + " durability.";
         } else if (durability == 0){
-            rewardParent.transform.Find("FishingPole").GetComponent<Text>().text = "";
+            rewardParent.transform.Find("Panel").Find("FishingPole").GetComponent<Text>().text = "";
         } else if (durability == -1){
-            rewardParent.transform.Find("FishingPole").GetComponent<Text>().text = "Your fishing pole ran out of durability and broke!";
+            rewardParent.transform.Find("Panel").Find("FishingPole").GetComponent<Text>().text = "Your fishing pole ran out of durability and broke!";
         }
     }
 }
