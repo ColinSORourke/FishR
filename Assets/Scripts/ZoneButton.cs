@@ -32,7 +32,8 @@ public class ZoneButton : MonoBehaviour
             purchasePanel.GetComponent<PurchaseScript>().setSrc(this.gameObject);
         } else {
             playerData.changeZone(myZone);
-            zonePanel.SetActive(false);
+            //zonePanel.SetActive(false);
+            zonePanel.GetComponent<Animator>().Play("ZoneSlideExit");
         }
     }
 
