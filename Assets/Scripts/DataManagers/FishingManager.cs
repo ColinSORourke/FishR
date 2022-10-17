@@ -11,6 +11,7 @@ public class FishingManager : MonoBehaviour
     public fishingStatuses currFishing;
     public GameObject catchPanel;
     public Button fishingButton;
+    public GameObject cancelButton;
     public TimeDisplay timeText;
     public NotificationManager notifs;
 
@@ -47,7 +48,6 @@ public class FishingManager : MonoBehaviour
         if (fs != null){
             FishingPole fp = this.GetComponent<PoleManager>().getPoleByID(fs.poleID);
             this.GetComponent<PoleManager>().lockPole(fs.poleID);
-            fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
             if ( fishingButton.interactable){
                 fishingButton.interactable = false;
             }
@@ -55,6 +55,8 @@ public class FishingManager : MonoBehaviour
                 if (!catchPanel.activeInHierarchy){
                     catchPanel.SetActive(true);
                     timeText.bite();
+                    fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Got a bite!";
+                    cancelButton.SetActive(false);
                 }
 
                 if (DateTime.Now > fs.getAwayTime()){
@@ -66,6 +68,8 @@ public class FishingManager : MonoBehaviour
                     catchPanel.transform.GetChild(1).GetComponent<Text>().text = "You got a bite! You have " + (remainingTime.Minutes + roundMin) + " minutes left to catch it.";
                 }
             } else {
+                fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
+                cancelButton.SetActive(true);
                 timeText.displayRemainingTime(fs);
             }
         }
@@ -79,6 +83,7 @@ public class FishingManager : MonoBehaviour
             this.GetComponent<PoleManager>().startUsing();
             fishingStatus fs = currFishing.activeInZone(z);
             fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Currently Fishing!";
+            cancelButton.SetActive(true);
             string notifIDString = notifs.scheduleNotification(fs.timeTillBite(), fs.biteDuration.deserialize(), i);
             string[] notifIDs = notifIDString.Split('\n');
             currFishing.addIDs(z, notifIDs[0], notifIDs[1]);
@@ -93,9 +98,16 @@ public class FishingManager : MonoBehaviour
         fishingStatus fs = currFishing.activeInZone(z);
         currFishing.stopFishing(z);
         saveFishing();
-        notifs.unscheduleMiss(fs.missID);
+        if (DateTime.Now < fs.biteTime.deserialize()){
+            notifs.unscheduleMiss(fs.catchID);
+        }
+        if (DateTime.Now < fs.getAwayTime()){
+            notifs.unscheduleMiss(fs.missID);
+        }
         timeText.displayFutureTime(z, fp.hook, fp.bait);
         fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Tap to Fish!";
+        fishingButton.interactable = true;
+        cancelButton.SetActive(false);
         this.GetComponent<PoleManager>().stopUsing(fs.poleID);
         this.GetComponent<PoleManager>().unlockPole();
     }
@@ -111,8 +123,12 @@ public class FishingManager : MonoBehaviour
         while (i < 3){
             fishingStatus fs = currFishing.statuses[i];
             if (fs != null){
-                notifs.unscheduleMiss(fs.catchID);
-                notifs.unscheduleMiss(fs.missID);
+                if (DateTime.Now < fs.biteTime.deserialize()){
+                    notifs.unscheduleMiss(fs.catchID);
+                }
+                if (DateTime.Now < fs.getAwayTime()){
+                    notifs.unscheduleMiss(fs.missID);
+                }
             }
             i += 1;
         }
@@ -135,6 +151,7 @@ public class FishingManager : MonoBehaviour
                 fishingButton.interactable = false;
                 fishingButton.transform.GetChild(0).GetComponent<Text>().text = "Too much fishing!";
             }
+            cancelButton.SetActive(false);
         }
     }
 

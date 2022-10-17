@@ -15,3 +15,4 @@ MonoBehaviour:
   description: When you start fishing in the game, in some time you'll get a notification
     that you got a bite! Respond to that bite quickly to catch a fish! Try it now,
     I'll let you use my fishing pole!
+  pose: 1

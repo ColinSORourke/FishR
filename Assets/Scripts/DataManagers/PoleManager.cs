@@ -72,14 +72,12 @@ public class PoleManager : MonoBehaviour
         FishingPole result = myPoles.left();
         save();
         this.updatePoleDisplay();
-        catchMan.updatePole(result, myPoles.inUseQ());
     }
 
     public void right(){
         FishingPole result = myPoles.right();
         save();
         this.updatePoleDisplay();
-        catchMan.updatePole(result, myPoles.inUseQ());
     }
 
     public bool weakenByID(int dur, int poleID){
@@ -151,6 +149,7 @@ public class PoleManager : MonoBehaviour
 
     public void updatePoleDisplay(){
         FishingPole p = this.getPole();
+        catchMan.updatePole(p, myPoles.inUseQ());
         PDL.displayPole(p, getSprite(p.spriteID));
         
         PDL.inUse(this.myPoles.inUseQ());
@@ -193,7 +192,7 @@ public class PoleManager : MonoBehaviour
     public void lockPole(int poleID){
         lockedPole = myPoles.findByID(poleID);
         FishingPole p = myPoles.getPole(lockedPole);
-
+        PDL.displayPole(p, getSprite(p.spriteID));
         myPoles.currSelectPole = lockedPole;
         poleDisplay.GetComponent<Image>().sprite = getSprite(p.spriteID);
         poleDisplay.transform.Find("LuckColor").Find("LuckText").GetComponent<Text>().text = p.charm + "";
@@ -204,11 +203,14 @@ public class PoleManager : MonoBehaviour
     }
 
     public void unlockPole(){
+        int origLock = lockedPole;
         lockedPole = -2;
         if (myPoles.myPolesLen > 0){
             poleDisplay.transform.Find("TutorialButtonManB/Buttons").gameObject.SetActive(true);
         }
-        this.updatePoleDisplay();
+        if (origLock != -2){
+            this.updatePoleDisplay();
+        }
     }
 
     public Sprite getSprite(int id){

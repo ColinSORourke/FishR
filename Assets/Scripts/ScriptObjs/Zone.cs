@@ -18,6 +18,8 @@ public class Zone : ScriptableObject
     public string hint;
     public string fullHint;
 
+    public Color curtainColor;
+
     public Sprite background;
     public Sprite banner;
     public Sprite title;

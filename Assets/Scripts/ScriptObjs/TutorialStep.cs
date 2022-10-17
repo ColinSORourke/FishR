@@ -8,4 +8,5 @@ public class TutorialStep : ScriptableObject
     //TextAreaAttribute(int minLines, int maxLines);
     [TextArea(15,20)]
     public string description;
+    public int pose;
 }

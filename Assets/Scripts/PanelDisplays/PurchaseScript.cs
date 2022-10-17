@@ -12,6 +12,7 @@ public class PurchaseScript : MonoBehaviour
     public Text promptText;
     public ShopPanel POTDShop;
     public TutorialSequencer tutorial;
+    public FishingManager fishMan;
 
     public GameObject srcButton;
 
@@ -106,6 +107,15 @@ public class PurchaseScript : MonoBehaviour
         poleMan.deleteCurrentPole();
     }
 
+    public void cancelFishPrompt(){
+        currType = purchaseType.cancelFish;
+        promptText.text = "Cancel fishing in this zone?";
+    }
+
+    public void cancelFishConfirm(){
+        fishMan.stopFishing();
+    }
+
     public void confirmPurchase(){
         switch(currType){
             case purchaseType.zone:
@@ -126,6 +136,9 @@ public class PurchaseScript : MonoBehaviour
             case purchaseType.poleOTD:
                 poleOTDConfirm();
                 break;
+            case purchaseType.cancelFish:
+                cancelFishConfirm();
+                break;
         }
     }
 
@@ -144,5 +157,6 @@ public enum purchaseType{
     pole = 3,
     eraseAll = 4,
     deletePole = 5,
-    poleOTD = 6
+    poleOTD = 6,
+    cancelFish = 7
 }

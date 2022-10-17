@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class AnimPanelManager : MonoBehaviour
 {
+    public GameObject mainPanel;
+
+    public void enableMain(){
+        mainPanel.SetActive(true);
+    }
+
     public void disableSelf(){
         this.gameObject.SetActive(false);
     }

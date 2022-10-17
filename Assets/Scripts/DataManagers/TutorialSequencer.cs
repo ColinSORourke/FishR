@@ -12,6 +12,7 @@ public class TutorialSequencer : MonoBehaviour
     public GameObject TutorialScreen;
     public GameObject poleButtonsA;
     public GameObject poleButtonsB;
+    public GameObject tutorialChar;
 
     public Text tutorialText;
 
@@ -19,6 +20,8 @@ public class TutorialSequencer : MonoBehaviour
 
     public TutorialStep[] steps;
     public tutorialProgress t;
+
+    public Sprite[] poses;
 
     public void Awake(){
         if (System.IO.File.Exists(Application.persistentDataPath + "/TutorialStep.json"))
@@ -83,6 +86,7 @@ public class TutorialSequencer : MonoBehaviour
     public void checkStep(int i){
         if (!t.completedSteps[i]){
             TutorialScreen.SetActive(true);
+            tutorialChar.GetComponent<Image>().sprite = poses[steps[i].pose];
             tutorialText.text = steps[i].description;
             t.completedSteps[i] = true;
             save();

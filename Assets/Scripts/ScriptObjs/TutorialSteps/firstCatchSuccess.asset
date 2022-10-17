@@ -15,3 +15,4 @@ MonoBehaviour:
   description: Congratulations on catching your first fish! But oops, my pole broke!
     You should use  those BaitBux you just got to head to the store and buy a new
     pole!
+  pose: 4
