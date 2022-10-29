@@ -496,6 +496,27 @@ public class FishingPole {
         }
     }
 
+    public int weightedRoll(int max, float slope = 1.0f){
+        if (max == 1){
+            return 0;
+        }
+        if (slope < 0.0f || slope > (max/(max - 1.0f))){
+            return 0;
+        }
+        int x = Random.Range(1,max);
+        float trueSlope = (2.0f*slope) / (max * max);
+        float valA = 1.0f - (((max -1.0f) * (max) * trueSlope)/2.0f);
+        float valB = valA / max;
+        float valC = (max - x)*trueSlope;
+        float Y = valB + valC;
+        float f = Random.value * (2.0f*valB + ((max-1.0f) * trueSlope));
+        if (f < Y){
+            return x;
+        } else {
+            return max + 1 - x;
+        }
+    }
+
     public void clampStats(){
         hook = Mathf.Min(10, hook);
         bait = Mathf.Min(10, bait);

@@ -122,7 +122,8 @@ public class FishingManager : MonoBehaviour
         int i = 0;
         while (i < 3){
             fishingStatus fs = currFishing.statuses[i];
-            if (fs != null){
+            if (fs.active){
+                Debug.Log("Fishing Status " + i);
                 if (DateTime.Now < fs.biteTime.deserialize()){
                     notifs.unscheduleMiss(fs.catchID);
                 }

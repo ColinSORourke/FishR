@@ -14,6 +14,7 @@ public class PlayerData : MonoBehaviour
     public Sprite[] cashIcons;
     public Zone currZone;
     public Zone[] allZones = new Zone[10];
+
     
     void Awake(){
         if (System.IO.File.Exists(Application.persistentDataPath + "/PlayerData.json"))
@@ -50,6 +51,7 @@ public class PlayerData : MonoBehaviour
 
     public void getMoney(int money){
         myData.cash += money;
+        myData.totalCashEarned += money;
         updateCashText();
         save();
     }
@@ -87,6 +89,8 @@ public class PlayerData : MonoBehaviour
                 break;
         }
         myData.cash += Mathf.RoundToInt(payout);
+        myData.totalCashEarned += Mathf.RoundToInt(payout);
+        myData.totalFishCaught += 1;
         updateCashText();
         if (myData.allZoneData[currZone.index].catchRarity(theRarity, size)){
             myData.gainScore(theRarity);
@@ -159,8 +163,13 @@ public class playerSaveData{
     public int collectionScore;
     public zoneData[] allZoneData;
 
+    public int totalCashEarned;
+    public int totalFishCaught; 
+
     public playerSaveData(){
         cash = 9;
+        totalCashEarned = 9;
+        totalFishCaught = 0;
         collectionScore = 0;
         allZoneData = new zoneData[10];
         int i = 0;

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4e58f8e8a314883b00b1c73d486174, type: 3}
+  m_Name: ColinCredit
+  m_EditorClassIdentifier: 
+  fullName: Colin O'Rourke
+  blurb: Colin is sometiems funny
+  roles: Producer, Designer, Developer
+  socialA: 'Portfolio
+
+    ColinSOR.com'
+  socialB: 'Twitter
+
+    @Stormwindboy'
+  pic: {fileID: 21300000, guid: 1771a42a3e8f740158ef7d4ff540cdc6, type: 3}
