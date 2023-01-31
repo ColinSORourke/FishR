@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flatwich
   m_EditorClassIdentifier: 
   fishName: Flatwich
-  description: Placeholder Description
+  description: He's got the B, the L, the T, the A, really all the letters.
   icon: {fileID: 21300000, guid: d2395dfb2ef2141ab9316d81f8210f32, type: 3}
-  basePay: 4
+  basePay: 3

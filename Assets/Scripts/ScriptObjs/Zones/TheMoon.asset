@@ -12,36 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3621ee57c29fd498197948b933caf817, type: 3}
   m_Name: TheMoon
   m_EditorClassIdentifier: 
-  zoneName: TheMoon
-  index: 1
-  Description: We are here for more testing
-  unlockCost: 15
+  zoneName: The Moon
+  index: 3
+  Description: There's only one lake on the moon, but it's FULL of fish!
+  unlockCost: 120
   hintCost: 0
   durCost: 1
   hint: Not yet implemented
   fullHint: Not yet implemented
-  curtainColor: {r: 0.41006586, g: 0.7842493, b: 0.8962264, a: 0.6745098}
+  curtainColor: {r: 0, g: 0, b: 0, a: 0}
   background: {fileID: 21300000, guid: eae65ad3b03a44f349a953f4f34511c0, type: 3}
   banner: {fileID: 21300000, guid: 5a46ffaceebea476ea97f8dec7cd3d57, type: 3}
   title: {fileID: 21300000, guid: 029559a81de1a4dd7a726f56f0958da2, type: 3}
   baseMinTime:
-    hours: 1
+    hours: 4
     minutes: 0
     seconds: 0
   baseMaxTime:
-    hours: 3
+    hours: 10
     minutes: 0
     seconds: 30
   minScalar:
     hours: 0
-    minutes: 3
+    minutes: 12
     seconds: 0
   maxScalar:
     hours: 0
-    minutes: 6
+    minutes: 18
     seconds: 0
-  commonFish: {fileID: 11400000, guid: aead817e0c9134fc8936793e91066b5e, type: 2}
-  commonAltFish: {fileID: 11400000, guid: 24da930a9850c46dcbf58c68710ff9a4, type: 2}
-  uncommonFish: {fileID: 11400000, guid: cedd8b0c99eb94dcf9d604318b90634c, type: 2}
-  rareFish: {fileID: 11400000, guid: 83f8f5aa490a14bdfac6bcf8d08805cc, type: 2}
-  specialFish: {fileID: 11400000, guid: 237d0bc479e274c78999ddb9874f75d8, type: 2}
+  commonFish: {fileID: 11400000, guid: 3644f56a1bbb44412b710011cef640bb, type: 2}
+  commonAltFish: {fileID: 11400000, guid: 24edc3cc00c914f37ae4555bfbce9cd4, type: 2}
+  uncommonFish: {fileID: 11400000, guid: de1e9e9e965874ea38c00fdef994061b, type: 2}
+  rareFish: {fileID: 11400000, guid: a69937432442346e2af5a54234a54d77, type: 2}
+  specialFish: {fileID: 11400000, guid: 64baf62ec2b0a4d128d7c54687cc0445, type: 2}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pikesicle
   m_EditorClassIdentifier: 
   fishName: Pikesicle
-  description: Placeholder Description
+  description: Give it a lick! Careful it doesn't bite back!
   icon: {fileID: 21300000, guid: d47fedac66d194924a721bf08d9d1495, type: 3}
   basePay: 1

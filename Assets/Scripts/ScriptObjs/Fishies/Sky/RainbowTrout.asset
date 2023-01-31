@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e252019f96374d70982680fef2dcffc, type: 3}
-  m_Name: CornCod
+  m_Name: RainbowTrout
   m_EditorClassIdentifier: 
-  fishName: Corn Cod
-  description: Too buttery to hold!
-  icon: {fileID: 21300000, guid: 181f283c910cb4281b3e3e9e53521243, type: 3}
-  basePay: 1
+  fishName: Rainbow Trout
+  description: Double trout, alllll the way across the lake!
+  icon: {fileID: 21300000, guid: bab44b3639c5b4abbae7bc36bddeb481, type: 3}
+  basePay: 4

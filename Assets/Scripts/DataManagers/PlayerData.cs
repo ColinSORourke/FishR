@@ -34,17 +34,19 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         updateCashText();
-        displayCurrentZone();
+        changeZone(myData.currentZone);
     }
 
     public void changeZone(Zone newZone){
         currZone = newZone;
+        myData.currentZone = newZone.index;
         displayCurrentZone();
         save();
     }
 
     public void changeZone(int newZoneInd){
         currZone = allZones[newZoneInd];
+        myData.currentZone = newZoneInd;
         displayCurrentZone();
         save();
     }
@@ -163,6 +165,8 @@ public class playerSaveData{
     public int collectionScore;
     public zoneData[] allZoneData;
 
+    public int currentZone;
+
     public int totalCashEarned;
     public int totalFishCaught; 
 
@@ -171,6 +175,7 @@ public class playerSaveData{
         totalCashEarned = 9;
         totalFishCaught = 0;
         collectionScore = 0;
+        currentZone = 0;
         allZoneData = new zoneData[10];
         int i = 0;
         while (i < allZoneData.Length){

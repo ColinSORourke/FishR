@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e252019f96374d70982680fef2dcffc, type: 3}
   m_Name: PoolEel
   m_EditorClassIdentifier: 
-  fishName: Pool Eel
-  description: Placeholder Description
+  fishName: Pool Noodle Eel
+  description: Despite being called 'noodle', this one isn't pleasant to eat.
   icon: {fileID: 21300000, guid: 0f0a317a2c905492bbadab295450aa13, type: 3}
   basePay: 0
