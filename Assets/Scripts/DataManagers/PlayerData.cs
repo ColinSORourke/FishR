@@ -14,6 +14,8 @@ public class PlayerData : MonoBehaviour
     public Sprite[] cashIcons;
     public Zone currZone;
     public Zone[] allZones = new Zone[10];
+    public TutorialSequencer tutorialMan;
+    public FishingManager fishMan;
 
     
     void Awake(){
@@ -93,9 +95,21 @@ public class PlayerData : MonoBehaviour
         myData.cash += Mathf.RoundToInt(payout);
         myData.totalCashEarned += Mathf.RoundToInt(payout);
         myData.totalFishCaught += 1;
+        myData.recentCatchSize = size;
         updateCashText();
         if (myData.allZoneData[currZone.index].catchRarity(theRarity, size)){
-            myData.gainScore(theRarity);
+            int newScore = myData.gainScore(theRarity);
+            if (newScore >= 30){
+                tutorialMan.checkStep(5);
+                fishMan.increaseActive();
+            } 
+            if (newScore >= 50){
+                tutorialMan.checkStep(6);
+                fishMan.increaseActive();
+            }
+            if (newScore == 80){
+                tutorialMan.checkStep(7);
+            }
         }
         save();
         return Mathf.RoundToInt(payout);
@@ -163,7 +177,10 @@ public class PlayerData : MonoBehaviour
 public class playerSaveData{
     public int cash;
     public int collectionScore;
+    public int maxFishing;
     public zoneData[] allZoneData;
+
+    public fishSize recentCatchSize;
 
     public int currentZone;
 
@@ -176,6 +193,7 @@ public class playerSaveData{
         totalFishCaught = 0;
         collectionScore = 0;
         currentZone = 0;
+        maxFishing = 1;
         allZoneData = new zoneData[10];
         int i = 0;
         while (i < allZoneData.Length){
@@ -185,7 +203,7 @@ public class playerSaveData{
         allZoneData[0].unlocked = true;
     }
 
-    public void gainScore(fishRarity r){
+    public int gainScore(fishRarity r){
         switch(r){
             case fishRarity.common:
                 collectionScore += 1;
@@ -203,6 +221,22 @@ public class playerSaveData{
                 collectionScore += 3;
                 break;
         }
+
+        if (collectionScore >= 30 && maxFishing == 1){
+            maxFishing = 2;
+            return collectionScore;
+        }
+
+        if (collectionScore >= 50 && maxFishing == 2){
+            maxFishing = 3;
+            return collectionScore;
+        }
+
+        if (collectionScore == 80){
+            return collectionScore;
+        }
+
+        return 0;
     }
 }
 

@@ -29,6 +29,11 @@ public class FishingManager : MonoBehaviour
         }
     }
 
+    public void increaseActive(){
+        currFishing.maxActive += 1;
+        saveFishing();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

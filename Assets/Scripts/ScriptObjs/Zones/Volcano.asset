@@ -20,7 +20,7 @@ MonoBehaviour:
   durCost: 1
   hint: Not yet implemented
   fullHint: Not yet implemented
-  curtainColor: {r: 0.5943396, g: 0.16540584, b: 0.16540584, a: 0}
+  curtainColor: {r: 0.5943396, g: 0.16540584, b: 0.16540584, a: 0.7294118}
   background: {fileID: 21300000, guid: da6466e21d78b4288a3804ff399b4b74, type: 3}
   banner: {fileID: 21300000, guid: 94181d818b71e4713a6997f90803467e, type: 3}
   title: {fileID: 21300000, guid: b042336ceaaac40baac60fc36b489a83, type: 3}

@@ -15602,6 +15602,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ecca9d357b9d6440b81c5ea280b3efdc, type: 2}
   - {fileID: 11400000, guid: cb6cef906324e4b53997139e3628d7ef, type: 2}
   - {fileID: 11400000, guid: 29b169abfc5d64444a92618dae32ddf5, type: 2}
+  - {fileID: 11400000, guid: 2e6f5e2e3098a4589b9c2945c62fee08, type: 2}
+  - {fileID: 11400000, guid: a8f659d132db940c6a324b2f52ca643e, type: 2}
+  - {fileID: 11400000, guid: fdc171f86ed994cb0bcb209be2d0abf5, type: 2}
   poses:
   - {fileID: 21300000, guid: 58f8073e1d98c4a4d90a0fa8e654681c, type: 3}
   - {fileID: 21300000, guid: 503c46cf52c01422f9566788633fe5fc, type: 3}
@@ -15675,6 +15678,7 @@ MonoBehaviour:
   myData:
     cash: 100
     collectionScore: 0
+    maxFishing: 1
     allZoneData:
     - unlocked: 0
       unlockedHint: 0
@@ -15876,6 +15880,7 @@ MonoBehaviour:
         numCaught: 0
         bestSize: -1
       specialCaught: 0
+    recentCatchSize: 0
     currentZone: 0
     totalCashEarned: 9
     totalFishCaught: 0
@@ -15897,6 +15902,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  tutorialMan: {fileID: 1774175397}
+  fishMan: {fileID: 1774175401}
 --- !u!114 &1774175401
 MonoBehaviour:
   m_ObjectHideFlags: 0
