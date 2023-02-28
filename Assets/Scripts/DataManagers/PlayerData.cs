@@ -26,6 +26,7 @@ public class PlayerData : MonoBehaviour
             Debug.Log("Reading player save JSON");
             reader.Close();
             myData = JsonUtility.FromJson<playerSaveData>(JSON);
+            changeZone(myData.currentZone);
         } else { 
             myData = new playerSaveData();
             save();
@@ -36,7 +37,6 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         updateCashText();
-        changeZone(myData.currentZone);
     }
 
     public void changeZone(Zone newZone){

@@ -15550,8 +15550,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1774175402}
-  - component: {fileID: 1774175401}
   - component: {fileID: 1774175400}
+  - component: {fileID: 1774175401}
   - component: {fileID: 1774175399}
   - component: {fileID: 1774175398}
   - component: {fileID: 1774175397}
@@ -16627,7 +16627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b9aa009351f344756a3d83d9083ce406, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a702733e9d93409c972cf643487f6a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -18023,7 +18023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7b90c682f04524f4587cf7787a85f286, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c8ab330ecc0f48088ab8ee171efdcae, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

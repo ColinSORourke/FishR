@@ -49,8 +49,6 @@ public class TutorialSequencer : MonoBehaviour
             }
             if (!t.completedSteps[2]){
                 ShopButton.SetActive(false);
-            }
-            if (!t.completedSteps[3]){
                 poleButtonsA.SetActive(false);
                 poleButtonsB.SetActive(false);
             }
