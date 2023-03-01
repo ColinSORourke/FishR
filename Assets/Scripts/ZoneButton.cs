@@ -18,7 +18,7 @@ public class ZoneButton : MonoBehaviour
         this.GetComponent<Image>().sprite = myZone.banner;
         this.transform.GetChild(0).GetComponent<Image>().sprite = myZone.title;
         if (!info.unlocked){
-            this.GetComponent<Image>().color = new Color32(100,100,100,200);
+            this.GetComponent<Image>().color = new Color32(100,100,100,255);
         } else {
             this.GetComponent<Image>().color = new Color32(255,255,255,255);
         }
