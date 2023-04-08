@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ColinCredit
   m_EditorClassIdentifier: 
   fullName: Colin O'Rourke
-  blurb: Colin is sometiems funny
+  blurb: Is sometimes funny
   roles: Producer, Designer, Developer
   socialA: 'Portfolio
 

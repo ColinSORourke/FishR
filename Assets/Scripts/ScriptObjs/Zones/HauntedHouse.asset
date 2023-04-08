@@ -23,7 +23,7 @@ MonoBehaviour:
   curtainColor: {r: 0.32459384, g: 0.14048594, b: 0.38679248, a: 0.6745098}
   background: {fileID: 21300000, guid: dacbefbd8494d4f4a9aaf000498defa3, type: 3}
   banner: {fileID: 21300000, guid: f271521f1cbad48e3afde23de79e6d5c, type: 3}
-  title: {fileID: 21300000, guid: 0f7b5f8a448094d5f93954e40402887e, type: 3}
+  title: {fileID: 21300000, guid: 07a318311c2ad48bd8f9cf91edf70b32, type: 3}
   baseMinTime:
     hours: 9
     minutes: 0
